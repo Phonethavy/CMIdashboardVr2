@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+
+    <!-- FontAwesome -->
+    <script src="https://kit.fontawesome.com/d90dda4fe3.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <!-- XLSX library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, 'Times New Roman', 'Phetsarath OT', sans-serif;
+            margin: 20px;
+            background-color: #f0f0f0;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: #fff;
+            font-size: 16px;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            text-align: right;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #db234e;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #ddd;
+        }
+
+        button {
+            padding: 10px;
+            font-size: 16px;
+            margin-right: 10px;
+            cursor: pointer;
+            background-color: #db234e;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #a31a37;
+        }
+
+        @media only screen and (max-width: 600px) {
+            table {
+                font-size: 14px;
+            }
+
+            th,
+            td {
+                padding: 8px;
+            }
+        }
+    </style>
+    <script>
+ document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('searchForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // หยุดการรีเฟรชหน้าหลังการ submit
+
+            const formData = new FormData(this);
+            const params = new URLSearchParams(formData).toString();
+
+            fetch('server1.php?' + params)
+                .then(response => response.json())
+                .then(data => {
+                    const tableBody = document.querySelector('#data-table tbody');
+                    tableBody.innerHTML = ''; // ล้างข้อมูลเก่าก่อน
+                    if (data.length > 0) {
+                        data.forEach((row, index) => {
+                            const tr = document.createElement('tr');
+                            tr.innerHTML = `
+                                <td>${row.index}</td>
+                                <td>${row.empid}</td>
+                                <td>${row.name}</td>
+                                <td>${row.date}</td>
+                                <td>${row.kpi_id}</td>
+                                <td>${row.jpsid}</td>
+                                <td>${row.deptid}</td>
+                                <td>${row.performance}</td>
+                            `;
+                            tableBody.appendChild(tr);
+                        });
+                    } else {
+                        // กรณีไม่มีข้อมูล
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `<td colspan="7" style="text-align: center;">No data available</td>`;
+                        tableBody.appendChild(tr);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        });
+
+
+            // Export table to Excel
+            window.ExportToExcel = function (type, fn, dl) {
+                const elt = document.getElementById('data-table');
+                const wb = XLSX.utils.table_to_book(elt, { sheet: "sheet1" });
+                return dl ?
+                    XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }) :
+                    XLSX.writeFile(wb, fn || ('KPI_Employee.' + (type || 'xlsx')));
+            };
+        });
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <img src="12345.png" alt="" width="55px">
+                    CMIMFI
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.php"><i class="fa-solid fa-house-chimney"></i> ໜ້າຫຼັກ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="act.php"><i class="fa-solid fa-house-chimney"></i>KPIປ່ອຍ</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <div class="container mt-4">
+        <form id="searchForm">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="date">StarDate:</label>
+                        <input type="date" id="date" name="startdate" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="date">EndDate:</label>
+                        <input type="date" id="date" name="enddate" class="form-control" required>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-3">
+                <button type="submit"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
+                <button type="button" onclick="ExportToExcel('xlsx')">Export to Excel</button>
+            </div>
+        </form>
+        
+    </div>
+
+    <div class="container mt-4">
+        <table id="data-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Employee ID</th>
+                    <th>Name</th>
+                    <th>Month</th>
+                    <th>KPI ID</th>
+                    <th>Position ID</th>
+                    <th>Department ID</th>
+                    <th>ผลได้รับ</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- ข้อมูลจะถูกเติมที่นี่ด้วย JavaScript -->
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>

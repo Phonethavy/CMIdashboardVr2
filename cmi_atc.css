@@ -1,0 +1,213 @@
+* {
+    font-family: 'Times New Roman', 'Phetsarath OT';
+    margin: 0;
+    padding: 0;
+
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #f0f0f0;
+}
+
+h1 {
+    text-align: center;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    margin-top: 4%;
+}
+
+th,
+td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+
+
+}
+
+th:nth-child(2),
+td:nth-child(2) {
+    white-space: nowrap;
+    width: auto;
+    text-align: left;
+}
+
+th {
+    background-color: #c00;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+a {
+    text-decoration: none;
+}
+
+tr:hover {
+    background-color: #ddd;
+}
+
+#loading {
+    display: none;
+    text-align: center;
+    margin: 20px 0;
+}
+
+#a1 {
+    color: black;
+    text-decoration: none;
+    margin-left: 400px;
+}
+
+select,
+button {
+    padding: 10px;
+    font-size: 16px;
+    margin-right: 10px;
+    cursor: pointer;
+    border-radius: 15px;
+    
+}
+button, select {
+    border-radius: 15px;
+    text-transform: none;
+}
+button {
+    background-color: #c00;
+    color: white;
+    border: none;
+    border-radius: 15px;
+}
+
+button:hover {
+    background-color: #a31a37;
+    border-radius: 15px;
+
+}
+button, input {
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    border-radius: 15px;
+    line-height: inherit;
+}
+/* Mobile-specific styles */
+table th {
+    text-align: center;
+    border-width: 1px;
+}
+.bt-n2{
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    border-radius: 15px;
+    line-height: inherit;
+}
+h1 {
+    text-align: center;
+    border-bottom: 5px solid #a31a37;
+    display: inline-block;
+    width: 100%;
+    padding-bottom: 10px;
+}
+
+.section-header {
+    background-color: #cc3333;
+    color: white;
+    font-weight: bold;
+}
+
+.approved {
+    color: green;
+    font-weight: bold;
+}
+
+.not-approved {
+    color: red;
+    font-weight: bold;
+}
+
+.tb1 {
+    background-color: #c00;
+}
+
+.a {
+    color: black;
+}
+
+@media (max-width: 768px) {
+    table th {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .h3,
+    h3 {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    table th {
+        font-size: 12px;
+        padding: 6px;
+    }
+
+    h3 {
+        font-size: 0.85rem;
+
+    }
+}
+
+h3 {
+    font-size: 0.85rem;
+
+}
+#data-table, #data-table1 {
+    width: 100%;
+    overflow-x: auto;
+    display: block;
+}
+
+#data-table1 th, #data-table1 td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap; /* ป้องกันข้อความขึ้นบรรทัดใหม่ */
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#data-table1 thead {
+    background-color: #c00;
+    color: white;
+    overflow: auto; /* เพิ่มการเลื่อนถ้าข้อมูลล้น */
+    font-weight: bold;
+}
+
+#data-table1 tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#data-table1 tbody tr:nth-child(odd) {
+    overflow: auto; /* เพิ่มการเลื่อนถ้าข้อมูลล้น */
+    background-color: #fff;
+}
+
+#data-table1 th {
+    position: sticky;
+    top: 0;
+    background-color: #c00;
+    z-index: 2;
+    width: 100%;
+}
+
