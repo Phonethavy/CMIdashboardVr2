@@ -10,231 +10,231 @@ if (isset($_GET['year1']) && isset($_GET['year2'])) {
     $sqlCurrentYear = "SELECT 
              date,
                    FORMAT(SUM(CASE 
-                        WHEN gl_code IN ('3101000','3202000','3203000','3208000','3401200','3402200','3800000','3908000','5101311','5101312','5102132','5102232','5102870',
+                        WHEN act_gl_code IN ('3101000','3202000','3203000','3208000','3401200','3402200','3800000','3908000','5101311','5101312','5102132','5102232','5102870',
                         '5102880','5102900','5109300','5506200','5508400','5701200','5704110','5704120','5704220','5705000') 
-                        THEN tbl_atc.amount_money ELSE 0 END) 
+                        THEN tbl_atc.act_amount_money ELSE 0 END) 
                     - 
                     SUM(CASE 
-                        WHEN gl_code IN ('4101341','4101800','4102130','4102151','4102152','4102510','4102512','4106100','4107800','4108800','4109100','4109300','4109800','4201100','4201200','4201300','4202100','4202200',
+                        WHEN act_gl_code IN ('4101341','4101800','4102130','4102151','4102152','4102510','4102512','4106100','4107800','4108800','4109100','4109300','4109800','4201100','4201200','4201300','4202100','4202200',
                         '4202800','4203100','4203200','4208000','4300000','4402000','4403120','4403180','4403800','4403810','4405100','4405200','4405201','4405300','4406100','4406500','4407100','4407200','4408100','4408200','4408300',
                         '4408400','4408500','4408600','4408610','4408720','4408730','4408800','4506100','4506200','4508000','4601110','4601122','4601124','4601125','4601126','4601127','4601128','4601210','4701200','4701800','4702800','4704120','4704220','4705100') 
-                        THEN tbl_atc.amount_money ELSE 0 END), 
+                        THEN tbl_atc.act_amount_money ELSE 0 END), 
                     'N0') AS 'Capital16',  
 
                     FORMAT(SUM(CASE 
-                        WHEN gl_code IN ('3401200','3402200') 
-                        THEN tbl_atc.amount_money ELSE 0 END), 'N0') AS 'Capital2_16_7' ,
+                        WHEN act_gl_code IN ('3401200','3402200') 
+                        THEN tbl_atc.act_amount_money ELSE 0 END), 'N0') AS 'Capital2_16_7' ,
                     
                     FORMAT(SUM(CASE 
-                        WHEN gl_code IN ('1131110','1131130','1131151','1131152','1131153','1131242') 
-                        THEN tbl_atc.amount_money ELSE 0 END), 'N0') AS 'debt2', 
+                        WHEN act_gl_code IN ('1131110','1131130','1131151','1131152','1131153','1131242') 
+                        THEN tbl_atc.act_amount_money ELSE 0 END), 'N0') AS 'debt2', 
                     FORMAT(SUM(CASE 
-                        WHEN gl_code IN ('1203121','1203122','1283121','1283122','1291131','1291132','1292131','1292132','1293131','1293132') 
-                        THEN tbl_atc.amount_money ELSE 0 END) 
+                        WHEN act_gl_code IN ('1203121','1203122','1283121','1283122','1291131','1291132','1292131','1292132','1293131','1293132') 
+                        THEN tbl_atc.act_amount_money ELSE 0 END) 
                     - 
                     SUM(CASE 
-                        WHEN gl_code IN ('1299131','1299211','1299311') 
-                        THEN tbl_atc.amount_money ELSE 0 END), 'N0') AS 'loans5', 
+                        WHEN act_gl_code IN ('1299131','1299211','1299311') 
+                        THEN tbl_atc.act_amount_money ELSE 0 END), 'N0') AS 'loans5', 
                     
                     FORMAT(SUM(CASE 
-                        WHEN gl_code IN ('1441200','1441810','1442200','1442400','1442500','1442600','1442700','1442800') 
-                        THEN tbl_atc.amount_money ELSE 0 END) 
+                        WHEN act_gl_code IN ('1441200','1441810','1442200','1442400','1442500','1442600','1442700','1442800') 
+                        THEN tbl_atc.act_amount_money ELSE 0 END) 
                     - 
                     SUM(CASE 
-                        WHEN gl_code IN ('1481120','1481125','1481181','1481220','1481240','1481250','1481260','1481270','1481280') 
-                        THEN tbl_atc.amount_money ELSE 0 END), 'N0') AS 'assets8', 
+                        WHEN act_gl_code IN ('1481120','1481125','1481181','1481220','1481240','1481250','1481260','1481270','1481280') 
+                        THEN tbl_atc.act_amount_money ELSE 0 END), 'N0') AS 'assets8', 
                     FORMAT(SUM(CASE 
-                        WHEN gl_code IN ('1283711','1283712','1203711','1203712','1297111','1297112','1297131','1297132','1361100','1362100','1362300','1362320','1362800','1373300','1373400','1373800','1388100','1388220','1388300','1388800') 
-                        THEN tbl_atc.amount_money ELSE 0 END), 'N0') AS 'otherAssets10',
+                        WHEN act_gl_code IN ('1283711','1283712','1203711','1203712','1297111','1297112','1297131','1297132','1361100','1362100','1362300','1362320','1362800','1373300','1373400','1373800','1388100','1388220','1388300','1388800') 
+                        THEN tbl_atc.act_amount_money ELSE 0 END), 'N0') AS 'otherAssets10',
 
                     FORMAT(SUM(CASE 
-                        WHEN gl_code IN ('5101311','5101312','5102132','5102232','5102870','5102880','5102900','5109300','5506200','5508400','5701200','5704110','5704120','5704220','5705000') 
-                        THEN tbl_atc.amount_money ELSE 0 END) 
+                        WHEN act_gl_code IN ('5101311','5101312','5102132','5102232','5102870','5102880','5102900','5109300','5506200','5508400','5701200','5704110','5704120','5704220','5705000') 
+                        THEN tbl_atc.act_amount_money ELSE 0 END) 
                     - 
                     SUM(CASE 
-                        WHEN gl_code IN ('4101341','4101800','4102130','4102151','4102152','4102510','4102512','4106100','4107800','4108800','4109100','4109300','4109800','4201100','4201200','4201300','4202100','4202200','4202800','4203100',
+                        WHEN act_gl_code IN ('4101341','4101800','4102130','4102151','4102152','4102510','4102512','4106100','4107800','4108800','4109100','4109300','4109800','4201100','4201200','4201300','4202100','4202200','4202800','4203100',
                         '4203200','4208000','4300000','4402000','4403120','4403180','4403800','4403810','4405100','4405200','4405201','4405300','4406100','4406500','4407100','4407200','4408100','4408200','4408300','4408400','4408500','4408600',
                         '4408610','4408720','4408730','4408800','4506100','4506200','4508000','4601110','4601122','4601124','4601125','4601126','4601127','4601128','4601210','4701200','4701800','4702800','4704120','4704220','4705100') 
-                        THEN tbl_atc.amount_money ELSE 0 END), 'N0') AS 'result_monthV',
+                        THEN tbl_atc.act_amount_money ELSE 0 END), 'N0') AS 'result_monthV',
                         
                     FORMAT(SUM(CASE 
-                        WHEN gl_code IN ('1101100','1121170','1131110','1131130','1131151','1131152','1131153','1131242','1203121','1203122','1283121','1283122','1291131','1291132','1292131','1292132','1293131','1293132',
+                        WHEN act_gl_code IN ('1101100','1121170','1131110','1131130','1131151','1131152','1131153','1131242','1203121','1203122','1283121','1283122','1291131','1291132','1292131','1292132','1293131','1293132',
                         '1441200','1441810','1442200','1442400','1442500','1442600','1442700','1442800','1283711','1283712','1203711','1203712','1297111','1297112','1297131','1297132','1361100','1362100','1362310','1362320',
                         '1362800','1373300','1373400','1373800','1388100','1388220','1388300','1388800') 
-                        THEN tbl_atc.amount_money ELSE 0 END) 
+                        THEN tbl_atc.act_amount_money ELSE 0 END) 
                     - 
                     SUM(CASE 
-                        WHEN gl_code IN ('1299131','1299211','1299311','1481120','1481125','1481181','1481220','1481240','1481250','1481260','1481270','1481280') 
-                        THEN tbl_atc.amount_money ELSE 0 END), 'N0') AS 'All_propertyI',
+                        WHEN act_gl_code IN ('1299131','1299211','1299311','1481120','1481125','1481181','1481220','1481240','1481250','1481260','1481270','1481280') 
+                        THEN tbl_atc.act_amount_money ELSE 0 END), 'N0') AS 'All_propertyI',
                     FORMAT(SUM(CASE 
-                        WHEN gl_code IN ('0') 
-                        THEN tbl_atc.amount_money ELSE 0 END), 'N0') AS 'balance2_3',
+                        WHEN act_gl_code IN ('0') 
+                        THEN tbl_atc.act_amount_money ELSE 0 END), 'N0') AS 'balance2_3',
                     FORMAT(SUM(CASE 
-                        WHEN gl_code IN ('1203121','1203122','1283121','1283122','1291131','1291132','1292131','1292132','1293131','1293132') 
-                        THEN tbl_atc.amount_money ELSE 0 END), 'N0') AS 'loan_balance99',
+                        WHEN act_gl_code IN ('1203121','1203122','1283121','1283122','1291131','1291132','1292131','1292132','1293131','1293132') 
+                        THEN tbl_atc.act_amount_money ELSE 0 END), 'N0') AS 'loan_balance99',
                     FORMAT(SUM(CASE 
-                        WHEN gl_code IN ('0') 
-                        THEN tbl_atc.amount_money ELSE 0 END), 'N0') AS 'otherdept11_4',
+                        WHEN act_gl_code IN ('0') 
+                        THEN tbl_atc.act_amount_money ELSE 0 END), 'N0') AS 'otherdept11_4',
                    FORMAT(SUM(CASE 
-                        WHEN gl_code IN ('2361110','2361140','2361310','2362300','2362500','2362510','2362600','2388500','2388800','3301100','3308000') 
-                        THEN tbl_atc.amount_money ELSE 0 END) 
+                        WHEN act_gl_code IN ('2361110','2361140','2361310','2362300','2362500','2362510','2362600','2388500','2388800','3301100','3308000') 
+                        THEN tbl_atc.act_amount_money ELSE 0 END) 
                     - 
                     SUM(CASE 
-                        WHEN gl_code IN ('2388300') 
-                        THEN tbl_atc.amount_money ELSE 0 END), 'N0') AS 'other15_3',
+                        WHEN act_gl_code IN ('2388300') 
+                        THEN tbl_atc.act_amount_money ELSE 0 END), 'N0') AS 'other15_3',
                     FORMAT(SUM(CASE 
-                        WHEN gl_code IN ('0') 
-                        THEN tbl_atc.amount_money ELSE 0 END), 'N0') AS 'drevaluation16_6',
+                        WHEN act_gl_code IN ('0') 
+                        THEN tbl_atc.act_amount_money ELSE 0 END), 'N0') AS 'drevaluation16_6',
                     FORMAT(SUM(CASE 
-                        WHEN gl_code IN ('2201300','2201512','2201513','2201521','2201522','2201523') 
-                        THEN tbl_atc.amount_money ELSE 0 END), 'N0') AS 'deptsentcus12',
+                        WHEN act_gl_code IN ('2201300','2201512','2201513','2201521','2201522','2201523') 
+                        THEN tbl_atc.act_amount_money ELSE 0 END), 'N0') AS 'deptsentcus12',
                     FORMAT(SUM(CASE 
-                        WHEN gl_code IN ('1101000','1103000','1108000') 
-                        THEN tbl_atc.amount_money ELSE 0 END), 'N0') AS 'Cash1_1',
+                        WHEN act_gl_code IN ('1101000','1103000','1108000') 
+                        THEN tbl_atc.act_amount_money ELSE 0 END), 'N0') AS 'Cash1_1',
                     FORMAT(SUM(CASE 
-                        WHEN gl_code IN ('2121210','2121230','212130','2121410','2121430','2131110','2131130','2131140','2131210','2131230','2131240','2131311','2131313','2131314','2131321','2131323','2131324','2131410','2131430','2131440','2131510','2131530','2131540','2131610',
+                        WHEN act_gl_code IN ('2121210','2121230','212130','2121410','2121430','2131110','2131130','2131140','2131210','2131230','2131240','2131311','2131313','2131314','2131321','2131323','2131324','2131410','2131430','2131440','2131510','2131530','2131540','2131610',
                         '2131630','2131640','2131710','2131730','2131740','2121250','2121450','2131150','2131250','2131315','2131325','213145','213155','213165','213175','21221,''21222','2122300','2132100','2132200','2141000','2142','2161000')
-                        THEN tbl_atc.amount_money ELSE 0 END), 'N0') AS 'Debt11',
+                        THEN tbl_atc.act_amount_money ELSE 0 END), 'N0') AS 'Debt11',
                     FORMAT(SUM(CASE 
-                        WHEN gl_code IN ('2201100','2201300','2201400','2201500','2201200','2231000','2235000','2241000','2261000','2201700')
-                        THEN tbl_atc.amount_money ELSE 0 END), 'N0') AS 'Debt12',
+                        WHEN act_gl_code IN ('2201100','2201300','2201400','2201500','2201200','2231000','2235000','2241000','2261000','2201700')
+                        THEN tbl_atc.act_amount_money ELSE 0 END), 'N0') AS 'Debt12',
                     FORMAT(SUM(CASE 
-                        WHEN gl_code IN ('5101311','5101312','5102132','5102900','5102232')
-                        THEN tbl_atc.amount_money ELSE 0 END), 'N0') AS 'Interest1',
+                        WHEN act_gl_code IN ('5101311','5101312','5102132','5102900','5102232')
+                        THEN tbl_atc.act_amount_money ELSE 0 END), 'N0') AS 'Interest1',
                     FORMAT(SUM(CASE 
-                        WHEN gl_code IN ('5102870','5102880')
-                        THEN tbl_atc.amount_money ELSE 0 END), 'N0') AS 'Fee_income9',
+                        WHEN act_gl_code IN ('5102870','5102880')
+                        THEN tbl_atc.act_amount_money ELSE 0 END), 'N0') AS 'Fee_income9',
                     FORMAT(SUM(CASE 
-                        WHEN gl_code IN ('5109300','5508400','5704110','5704120','5704220')
-                        THEN tbl_atc.amount_money ELSE 0 END), 'N0') AS 'Fee_orther15',
+                        WHEN act_gl_code IN ('5109300','5508400','5704110','5704120','5704220')
+                        THEN tbl_atc.act_amount_money ELSE 0 END), 'N0') AS 'Fee_orther15',
                    FORMAT(SUM(CASE 
-                        WHEN gl_code IN ('4101341','4102130','4102151','4102152','4102510','4102512')
-                        THEN tbl_atc.amount_money ELSE 0 END), 'N0') AS 'Interest_expense2_1',
+                        WHEN act_gl_code IN ('4101341','4102130','4102151','4102152','4102510','4102512')
+                        THEN tbl_atc.act_amount_money ELSE 0 END), 'N0') AS 'Interest_expense2_1',
                    FORMAT(SUM(CASE 
-                        WHEN gl_code IN ('4101800','4108800')
-                        THEN tbl_atc.amount_money ELSE 0 END), 'N0') AS 'Payment_of_fees10_1',
+                        WHEN act_gl_code IN ('4101800','4108800')
+                        THEN tbl_atc.act_amount_money ELSE 0 END), 'N0') AS 'Payment_of_fees10_1',
                    FORMAT(SUM(CASE 
-                        WHEN gl_code IN ('4201100','4201200','4201300','4202100','4202200','4202800','4203100','4203200','4208000','4300000','4402000',
+                        WHEN act_gl_code IN ('4201100','4201200','4201300','4202100','4202200','4202800','4203100','4203200','4208000','4300000','4402000',
                         '4403120','4403180','4403800','4403810','4405100','4405200','4405201','4405300','4406100','4406500','4407100','4407200','4408100',
                         '4408200','4408300','4408400','4408500','4408600','4408610','4408720','4408730','4408800')
-                        THEN tbl_atc.amount_money ELSE 0 END), 'N0') AS 'administrative_expenses16_1',
+                        THEN tbl_atc.act_amount_money ELSE 0 END), 'N0') AS 'administrative_expenses16_1',
                     FORMAT(SUM(CASE 
-                        WHEN gl_code IN ('4601110','4601122','4601124','4601125','4601126','4601127','4601128','4601210') 
-                        THEN tbl_atc.amount_money ELSE 0 END) 
+                        WHEN act_gl_code IN ('4601110','4601122','4601124','4601125','4601126','4601127','4601128','4601210') 
+                        THEN tbl_atc.act_amount_money ELSE 0 END) 
                     - 
                     SUM(CASE 
-                        WHEN gl_code IN ('5601200') 
-                        THEN tbl_atc.amount_money ELSE 0 END), 'N0') AS 'salary_lousy17',
+                        WHEN act_gl_code IN ('5601200') 
+                        THEN tbl_atc.act_amount_money ELSE 0 END), 'N0') AS 'salary_lousy17',
                   
                    FORMAT(SUM(CASE 
-                        WHEN gl_code IN ('4107800','4109100','4109300','4109800','4506200','4704120','4704220')
-                        THEN tbl_atc.amount_money ELSE 0 END), 'N0') AS 'Other_business18',
+                        WHEN act_gl_code IN ('4107800','4109100','4109300','4109800','4506200','4704120','4704220')
+                        THEN tbl_atc.act_amount_money ELSE 0 END), 'N0') AS 'Other_business18',
 
                    FORMAT(SUM(CASE 
-                        WHEN gl_code IN ('4701200','4701800','4705100') 
-                        THEN tbl_atc.amount_money ELSE 0 END) 
+                        WHEN act_gl_code IN ('4701200','4701800','4705100') 
+                        THEN tbl_atc.act_amount_money ELSE 0 END) 
                     - 
                     SUM(CASE 
-                        WHEN gl_code IN ('5701200','5705000') 
-                        THEN tbl_atc.amount_money ELSE 0 END), 'N0') AS 'debt_must_be_received19',
+                        WHEN act_gl_code IN ('5701200','5705000') 
+                        THEN tbl_atc.act_amount_money ELSE 0 END), 'N0') AS 'debt_must_be_received19',
                     FORMAT(SUM(CASE 
-                        WHEN gl_code IN ('4900000')
-                        THEN tbl_atc.amount_money ELSE 0 END), 'N0') AS 'Profit_tax21_1',
+                        WHEN act_gl_code IN ('4900000')
+                        THEN tbl_atc.act_amount_money ELSE 0 END), 'N0') AS 'Profit_tax21_1',
                     FORMAT(SUM(CASE 
-                        WHEN gl_code IN ('1101100')
-                        THEN tbl_atc.amount_money ELSE 0 END), 'N0') AS 'cash1_1_1',
+                        WHEN act_gl_code IN ('1101100')
+                        THEN tbl_atc.act_amount_money ELSE 0 END), 'N0') AS 'cash1_1_1',
                     FORMAT(SUM(CASE 
-                        WHEN gl_code IN ('2131130','2131152','2201300','2201512','2201513','2201521','2201522',
+                        WHEN act_gl_code IN ('2131130','2131152','2201300','2201512','2201513','2201521','2201522',
                         '2201523','2361110','2361140','2361310','2362300','2362500','2362510','2362600','2388300',
                         '2388500','2388800','3301100','3308000')
-                        THEN tbl_atc.amount_money ELSE 0 END), 'N0') AS 'All_dept_and_moneyII',
+                        THEN tbl_atc.act_amount_money ELSE 0 END), 'N0') AS 'All_dept_and_moneyII',
                     FORMAT(SUM(CASE 
-                        WHEN gl_code IN ('1291131','1291132','1292131','1292132','1293131','1293132')
+                        WHEN act_gl_code IN ('1291131','1291132','1292131','1292132','1293131','1293132')
 
-                        THEN tbl_atc.amount_money ELSE 0 END), 'N0') AS 'loan_balanceCDE',
+                        THEN tbl_atc.act_amount_money ELSE 0 END), 'N0') AS 'loan_balanceCDE',
                  FORMAT(SUM(CASE 
-                        WHEN gl_code IN ('9801000')
+                        WHEN act_gl_code IN ('9801000')
 
-                        THEN tbl_atc.amount_money ELSE 0 END), 'N0') AS 'outstangding16',
+                        THEN tbl_atc.act_amount_money ELSE 0 END), 'N0') AS 'outstangding16',
                    FORMAT(SUM(CASE 
-                        WHEN gl_code IN ('9802000')
+                        WHEN act_gl_code IN ('9802000')
 
-                        THEN tbl_atc.amount_money ELSE 0 END), 'N0') AS 'interest16',
+                        THEN tbl_atc.act_amount_money ELSE 0 END), 'N0') AS 'interest16',
                 FORMAT(SUM(CASE 
-                        WHEN gl_code IN ( '1203121','1203122','1283121','1283122','1291131','1291132','1292131','1292132','1293131','1293132')
+                        WHEN act_gl_code IN ( '1203121','1203122','1283121','1283122','1291131','1291132','1292131','1292132','1293131','1293132')
 
-                        THEN tbl_atc.amount_money ELSE 0 END), 'N0') AS 'outstanding05',
+                        THEN tbl_atc.act_amount_money ELSE 0 END), 'N0') AS 'outstanding05',
                  FORMAT(SUM(CASE 
-                        WHEN gl_code IN ( '1203121','1203122')
+                        WHEN act_gl_code IN ( '1203121','1203122')
 
-                        THEN tbl_atc.amount_money ELSE 0 END), 'N0') AS ' provisionA',
+                        THEN tbl_atc.act_amount_money ELSE 0 END), 'N0') AS ' provisionA',
                 FORMAT(SUM(CASE 
-                        WHEN gl_code IN ( '1283121','1283122')
+                        WHEN act_gl_code IN ( '1283121','1283122')
 
-                        THEN tbl_atc.amount_money ELSE 0 END), 'N0') AS ' provisionB',
+                        THEN tbl_atc.act_amount_money ELSE 0 END), 'N0') AS ' provisionB',
               FORMAT(SUM(CASE 
-                        WHEN gl_code IN ( '1291131','1291132')
+                        WHEN act_gl_code IN ( '1291131','1291132')
 
-                        THEN tbl_atc.amount_money ELSE 0 END), 'N0') AS ' provisionC',
+                        THEN tbl_atc.act_amount_money ELSE 0 END), 'N0') AS ' provisionC',
                   FORMAT(SUM(CASE 
-                        WHEN gl_code IN ( '1292131','1292132')
+                        WHEN act_gl_code IN ( '1292131','1292132')
 
-                        THEN tbl_atc.amount_money ELSE 0 END), 'N0') AS ' provisionD',
+                        THEN tbl_atc.act_amount_money ELSE 0 END), 'N0') AS ' provisionD',
              FORMAT(SUM(CASE 
-                        WHEN gl_code IN ('1293131','1293132')
+                        WHEN act_gl_code IN ('1293131','1293132')
 
-                        THEN tbl_atc.amount_money ELSE 0 END), 'N0') AS ' provisionE',
+                        THEN tbl_atc.act_amount_money ELSE 0 END), 'N0') AS ' provisionE',
                   FORMAT(SUM(CASE 
-                        WHEN gl_code IN ('4201100','4201200','4201300','4202100','4202200','4202800','4203100','4203200','4208000','4300000','4402000','4403120','4403180','4403800','4403810','4405100',
+                        WHEN act_gl_code IN ('4201100','4201200','4201300','4202100','4202200','4202800','4203100','4203200','4208000','4300000','4402000','4403120','4403180','4403800','4403810','4405100',
                         '4405200','4405201','4405300','4406100','4406500','4407100','4407200','4408100','4408200','4408300','4408400','4408500','4408600','4408610','4408720','4408730','4408800')
 
-                        THEN tbl_atc.amount_money ELSE 0 END), 'N0') AS 'expensesGeneral16_2',
+                        THEN tbl_atc.act_amount_money ELSE 0 END), 'N0') AS 'expensesGeneral16_2',
                    FORMAT(SUM(CASE 
-                        WHEN gl_code IN ('4601110','4601122','4601124','4601125','4601126','4601127','4601128','4601210') 
-                        THEN tbl_atc.amount_money ELSE 0 END) 
+                        WHEN act_gl_code IN ('4601110','4601122','4601124','4601125','4601126','4601127','4601128','4601210') 
+                        THEN tbl_atc.act_amount_money ELSE 0 END) 
                     - 
                     SUM(CASE 
-                        WHEN gl_code IN ('5601200') 
-                        THEN tbl_atc.amount_money ELSE 0 END), 'N0') AS 'expenseslousy17' ,
+                        WHEN act_gl_code IN ('5601200') 
+                        THEN tbl_atc.act_amount_money ELSE 0 END), 'N0') AS 'expenseslousy17' ,
                FORMAT(SUM(CASE 
-                        WHEN gl_code IN ('4107800','4109100','4109300','4109800','4506200','4704120','4704220')
+                        WHEN act_gl_code IN ('4107800','4109100','4109300','4109800','4506200','4704120','4704220')
 
-                        THEN tbl_atc.amount_money ELSE 0 END), 'N0') AS 'expensesOther18'
+                        THEN tbl_atc.act_amount_money ELSE 0 END), 'N0') AS 'expensesOther18'
                   
                 FROM tbl_atc
-                WHERE year(`date`) = '$yearCurrent' AND month(date )= '$month_str'
+                WHERE year(`act_date`) = '$yearCurrent' AND month(act_date )= '$month_str'
                 "; // Get data for each month
 
     $resultCurrent = mysqli_query($conn, $sqlCurrentYear);
 //ni_nim
 $sqlnii_nim = "SELECT  FORMAT(SUM(CASE 
-WHEN catalog_code IN ('Quantity') 
-THEN tbl_nim.amount ELSE 0 END), 'N0') AS 'Quantity',
+WHEN nim_catalog_code IN ('Quantity') 
+THEN tbl_nim.nim_amount ELSE 0 END), 'N0') AS 'Quantity',
 
 FORMAT(SUM(CASE 
-WHEN catalog_code IN ('LOAN0005','LOAN0006','LOAN0007','LOAN0008','LOAN0011','LOAN0012','LOAN0013','LOAN0014','LOAN0015','LOAN0016','LOAN0017','LOAN0018') 
-THEN tbl_nim.amount ELSE 0 END), 'N0') AS 'sumloan',
+WHEN nim_catalog_code IN ('LOAN0005','LOAN0006','LOAN0007','LOAN0008','LOAN0011','LOAN0012','LOAN0013','LOAN0014','LOAN0015','LOAN0016','LOAN0017','LOAN0018') 
+THEN tbl_nim.nim_amount ELSE 0 END), 'N0') AS 'sumloan',
 FORMAT(SUM(CASE 
-WHEN catalog_code IN ('LOAN0005','LOAN0006','LOAN0007','LOAN0008','LOAN0011','LOAN0012','LOAN0013','LOAN0014','LOAN0015','LOAN0016','LOAN0017','LOAN0018') 
-THEN tbl_nim.amount * tbl_nim.rate ELSE 0 END), 'N0') AS 'sumloanrate',
+WHEN nim_catalog_code IN ('LOAN0005','LOAN0006','LOAN0007','LOAN0008','LOAN0011','LOAN0012','LOAN0013','LOAN0014','LOAN0015','LOAN0016','LOAN0017','LOAN0018') 
+THEN tbl_nim.nim_amount * tbl_nim.nim_rate ELSE 0 END), 'N0') AS 'sumloanrate',
 FORMAT(SUM(CASE 
-WHEN catalog_code IN ('SAVING','FIXED_13','FIXED_18','FIXED_19','FIXED_20','FIXED_21','FIXED_22') 
-THEN tbl_nim.amount ELSE 0 END), 'N0') AS 'sumfixes',
+WHEN nim_catalog_code IN ('SAVING','FIXED_13','FIXED_18','FIXED_19','FIXED_20','FIXED_21','FIXED_22') 
+THEN tbl_nim.nim_amount ELSE 0 END), 'N0') AS 'sumfixes',
 FORMAT(SUM(CASE 
-WHEN catalog_code IN ('SAVING','FIXED_13','FIXED_18','FIXED_19','FIXED_20','FIXED_21','FIXED_22') 
-THEN tbl_nim.amount * tbl_nim.rate ELSE 0 END), 'N0') AS 'sumfixesrate',
+WHEN nim_catalog_code IN ('SAVING','FIXED_13','FIXED_18','FIXED_19','FIXED_20','FIXED_21','FIXED_22') 
+THEN tbl_nim.nim_amount * tbl_nim.nim_rate ELSE 0 END), 'N0') AS 'sumfixesrate',
 FORMAT(SUM(CASE 
-WHEN catalog_code IN ('SAV00003','SAV00004','SAV00016','SAV00001','SAV00002') 
-THEN tbl_nim.amount ELSE 0 END), 'N0') AS 'saving',
+WHEN nim_catalog_code IN ('SAV00003','SAV00004','SAV00016','SAV00001','SAV00002') 
+THEN tbl_nim.nim_amount ELSE 0 END), 'N0') AS 'saving',
 FORMAT(SUM(CASE 
-WHEN catalog_code IN ('SAV00003','SAV00004','SAV00016','SAV00001','SAV00002')
-THEN tbl_nim.amount * tbl_nim.rate ELSE 0 END), 'N0') AS 'savingrate',
+WHEN nim_catalog_code IN ('SAV00003','SAV00004','SAV00016','SAV00001','SAV00002')
+THEN tbl_nim.nim_amount * tbl_nim.nim_rate ELSE 0 END), 'N0') AS 'savingrate',
 FORMAT(SUM(CASE 
-WHEN catalog_code IN ('F060M001','F120M001','F048M001','F048M002','F036M004','F036M005','F036M006','F048M003','F006M002','F012M004','F024M002','F012M005','F024M003','F048M004','F048M005','F060M003','F012M006','F024M005') 
-THEN tbl_nim.amount ELSE 0 END), 'N0') AS 'sumfix2',
+WHEN nim_catalog_code IN ('F060M001','F120M001','F048M001','F048M002','F036M004','F036M005','F036M006','F048M003','F006M002','F012M004','F024M002','F012M005','F024M003','F048M004','F048M005','F060M003','F012M006','F024M005') 
+THEN tbl_nim.nim_amount ELSE 0 END), 'N0') AS 'sumfix2',
 FORMAT(SUM(CASE 
-WHEN catalog_code IN ('F060M001','F120M001','F048M001','F048M002','F036M004','F036M005','F036M006','F048M003','F006M002','F012M004','F024M002','F012M005','F024M003','F048M004','F048M005','F060M003','F012M006','F024M005') 
-THEN tbl_nim.amount * tbl_nim.rate ELSE 0 END), 'N0') AS 'sumfix2rate'
+WHEN nim_catalog_code IN ('F060M001','F120M001','F048M001','F048M002','F036M004','F036M005','F036M006','F048M003','F006M002','F012M004','F024M002','F012M005','F024M003','F048M004','F048M005','F060M003','F012M006','F024M005') 
+THEN tbl_nim.nim_amount * tbl_nim.nim_rate ELSE 0 END), 'N0') AS 'sumfix2rate'
  FROM `tbl_nim`
 WHERE year(`date`) = '$yearCurrent' AND month(date ) = '$month_str'"; // Get data for December only
 
@@ -242,29 +242,29 @@ $resultnii_nim = mysqli_query($conn, $sqlnii_nim);
 
 $sqlPreviousYear = "SELECT 
 FORMAT(SUM(CASE 
-    WHEN gl_code IN ('3101000','3202000','3203000','3208000','3401200','3402200','3800000','3908000','5101311','5101312','5102132','5102232',
+    WHEN act_gl_code IN ('3101000','3202000','3203000','3208000','3401200','3402200','3800000','3908000','5101311','5101312','5102132','5102232',
     '5102870','5102880','5102900','5109300','5508400','5601200','5701200','5704110','5704120','5705000')
-    THEN tbl_atc.amount_money ELSE 0 END) 
+    THEN tbl_atc.act_amount_money ELSE 0 END) 
 - 
 SUM(CASE 
-    WHEN gl_code IN ('4101341','4101800','4102151','4102152','4102510','4106100','4107800','4108800','4109100','4103900','4109800','4201100','4201200','4201300',
+    WHEN act_gl_code IN ('4101341','4101800','4102151','4102152','4102510','4106100','4107800','4108800','4109100','4103900','4109800','4201100','4201200','4201300',
     '4202100','4202200','4202800','4208000','4402000','4403120','4403180','4403800','4405100','4405200','4405300','4406100','4406500','4407100','4408100','4408200',
     '4400830','4408400','4408500','4408600','4408720','4408730','4408800','4506200','4508000','4601110','4601124','4601125','4601126','4601127','4601128','4701200',
     '4704120','4704220','4705100','4701200','4704120','4704220','4705100','4900000') 
-    THEN tbl_atc.amount_money ELSE 0 END), 
+    THEN tbl_atc.act_amount_money ELSE 0 END), 
 'N0') AS 'CapitalPreviousYear',
 FORMAT(SUM(CASE 
-        WHEN gl_code IN ('1101100','1121170','1131110','1131130','1131151','1131152','1131153','1131242','1203121','1203122','1283121','1283122','1291131','1291132','1292131','1292132','1293131','1293132',
+        WHEN act_gl_code IN ('1101100','1121170','1131110','1131130','1131151','1131152','1131153','1131242','1203121','1203122','1283121','1283122','1291131','1291132','1292131','1292132','1293131','1293132',
         '1441200','1441810','1442200','1442400','1442500','1442600','1442700','1442800','1283711','1283712','1203711','1203712','1297111','1297112','1297131','1297132','1361100','1362100','1362310','1362320',
         '1362800','1373300','1373400','1373800','1388100','1388220','1388300','1388800') 
-        THEN tbl_atc.amount_money ELSE 0 END) 
+        THEN tbl_atc.act_amount_money ELSE 0 END) 
     - 
     SUM(CASE 
-        WHEN gl_code IN ('1299131','1299211','1299311','1481120','1481125','1481181','1481220','1481240','1481250','1481260','1481270','1481280') 
-        THEN tbl_atc.amount_money ELSE 0 END), 'N0') AS 'All_propertyIPreviousYear',
+        WHEN act_gl_code IN ('1299131','1299211','1299311','1481120','1481125','1481181','1481220','1481240','1481250','1481260','1481270','1481280') 
+        THEN tbl_atc.act_amount_money ELSE 0 END), 'N0') AS 'All_propertyIPreviousYear',
 FORMAT(SUM(CASE 
-        WHEN gl_code IN ('1203121','1203122','1283121','1283122','1291131','1291132','1292131','1292132','1293131','1293132') 
-        THEN tbl_atc.amount_money ELSE 0 END), 'N0') AS 'PreviousYearloan_balance99'
+        WHEN act_gl_code IN ('1203121','1203122','1283121','1283122','1291131','1291132','1292131','1292132','1293131','1293132') 
+        THEN tbl_atc.act_amount_money ELSE 0 END), 'N0') AS 'PreviousYearloan_balance99'
 FROM tbl_atc
 WHERE  year(`date`) = '$yearPrevious' AND month(date )= '$month_str'"; // Get data December only
 

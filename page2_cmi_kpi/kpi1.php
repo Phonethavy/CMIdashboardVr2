@@ -120,7 +120,7 @@
                 <?php
                 include('../ajx_json/connect.php'); // Include database connection
                 $selectedYear = isset($_GET['year']) ? $_GET['year'] : ''; // Get selected year from URL
-                $tbl_atc = mysqli_query($conn, "SELECT YEAR(tbl_atc.date) AS year FROM `tbl_atc` GROUP BY `year`");
+                $tbl_atc = mysqli_query($conn, "SELECT YEAR(tbl_atc.act_date) AS year FROM `tbl_atc` GROUP BY `year`");
                 while ($c = mysqli_fetch_array($tbl_atc)) {
                     $selected = ($c['year'] == $selectedYear) ? 'selected' : '';
                 ?>
