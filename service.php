@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CMIMFI Dashboard</title>
     <link rel="stylesheet" href="service.css">
+
+
     <style>
         table {
             width: 100%;
@@ -115,7 +117,7 @@
 
                 <tbody>
                     <tr>
-                        <td><button class="toggle-btn" onclick="toggleRows()"><i class="fas fa-pen"></i></button> ຍອດເຫຼືອໜ່ວຍທັງໝົດ</td>
+                        <td><button class="toggle-btn" onclick="toggleRows()"><i class="fas fa-pen"></i></button><a href="sv1.php"> ຍອດເຫຼືອໜ່ວຍທັງໝົດ</a></td>
                         <td id=""><span></span></td>
                         <td id="count_type1_total16"><span></span></td>
                         <td id=""><span></span></td>
@@ -222,7 +224,7 @@
                         <td></td>
                     </tr>
                     <tr>
-                        <td><button class="toggle-btn" onclick="toggleRows2()"><i class="fas fa-pen"></i></button> ຍອດເຫຼືອສູນທັງໝົດ</td>
+                        <td><button class="toggle-btn" onclick="toggleRows2()"><i class="fas fa-pen"></i></button><a href="sv2.php">ຍອດເຫຼືອສູນທັງໝົດ</a> </td>
                         <td id=""><span></span></td>
                         <td id="count_type2_total16"><span></span></td>
                         <td id=""><span></span></td>
@@ -474,31 +476,46 @@
                     <tr id="20" class="hidden-row">
                         <td>ຈຳນວນລູກຄ້າປິດບັນຊີ (ເດືອນ) </td>
                         <td><span></span></td>
-                        <td id="count_agent_B16_new"><span></span></td>
+                        <td id="filtered_province_closed_count16"><span></span></td>
                         <td></td>
                         <td></td>
-                        <td id="count_agent_B14_new"><span></span></td>
+                        <td id="filtered_province_closed_count14"><span></span></td>
                         <td></td>
                         <td></td>
-                        <td id="count_agent_B17_new"><span></span></td>
+                        <td id="filtered_province_closed_count17"><span></span></td>
                         <td></td>
                         <td></td>
-                        <td id="count_agent_B15_new"><span></span></td>
+                        <td id="filtered_province_closed_count15"><span></span></td>
                         <td></td>
                     </tr>
                     <tr id="21" class="hidden-row">
                         <td>ຈຳນວນລູກຄ້າໝົດສັນຍາ (ເດືອນ)</td>
                         <td><span></span></td>
-                        <td id="count_count_close16"><span></span></td>
+                        <td id="count_16_out_ct"><span></span></td>
                         <td></td>
                         <td></td>
-                        <td id="count_count_close14"><span></span></td>
+                        <td id="count_14_out_ct"><span></span></td>
                         <td></td>
                         <td></td>
-                        <td id="count_count_close17"><span></span></td>
+                        <td id="count_17_out_ct"><span></span></td>
                         <td></td>
                         <td></td>
-                        <td id="count_count_close15"><span></span></td>
+                        <td id="count_15_out_ct"><span></span></td>
+                        <td></td>
+                    </tr>
+                    <tr id="" class="hidden-row">
+                        <td>ຍອດເຫຼືອລູກຄ້າທັງໝົດ</td>
+                        <td><span></span></td>
+                        <td id="count_16_out_ct"><span></span></td>
+                        <td></td>
+                        <td></td>
+                        <td id="count_14_out_ct"><span></span></td>
+                        <td></td>
+                        <td></td>
+                        <td id="count_17_out_ct"><span></span></td>
+                        <td></td>
+                        <td></td>
+                        <td id="count_15_out_ct"><span></span></td>
                         <td></td>
                     </tr>
                 </tbody>
@@ -636,10 +653,18 @@
                             document.querySelector('#count_cus_remain16 span').textContent = (data[0].count_cus_remain16 || "0").toLocaleString();
                             document.querySelector('#count_cus_remain17 span').textContent = (data[0].count_cus_remain17 || "0").toLocaleString();
 
-                            document.querySelector('#count_count_close14 span').textContent = (data[0].count_count_close14 || "0").toLocaleString();
-                            document.querySelector('#count_count_close15 span').textContent = (data[0].count_count_close15 || "0").toLocaleString();
-                            document.querySelector('#count_count_close16 span').textContent = (data[0].count_count_close16 || "0").toLocaleString();
-                            document.querySelector('#count_count_close17 span').textContent = (data[0].count_count_close17 || "0").toLocaleString();
+                            document.querySelector('#filtered_province_closed_count14 span').textContent = (data[0].filtered_province_closed_count[14] || "0").toLocaleString();
+                            document.querySelector('#filtered_province_closed_count15 span').textContent = (data[0].filtered_province_closed_count[15] || "0").toLocaleString();
+                            document.querySelector('#filtered_province_closed_count16 span').textContent = (data[0].filtered_province_closed_count[16] || "0").toLocaleString();
+                            document.querySelector('#filtered_province_closed_count17 span').textContent = (data[0].filtered_province_closed_count[17] || "0").toLocaleString();
+                          
+
+                            document.querySelector('#count_14_out_ct span').textContent = (data[0].count_14_out_ct || "0").toLocaleString();
+                            document.querySelector('#count_15_out_ct span').textContent = (data[0].count_15_out_ct || "0").toLocaleString();
+                            document.querySelector('#count_16_out_ct span').textContent = (data[0].count_16_out_ct || "0").toLocaleString();
+                            document.querySelector('#count_17_out_ct span').textContent = (data[0].count_17_out_ct || "0").toLocaleString();
+
+                          
 
                         } else {
                             // จัดการกรณีไม่มีข้อมูล

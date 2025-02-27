@@ -20,6 +20,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="st1.css">
+    <link rel="stylesheet" href="service.css">
     <style>
            body {
             font-family: Arial, sans-serif;

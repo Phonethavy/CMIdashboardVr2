@@ -1,9 +1,5 @@
-<!DOCTYPE html>
-<html lang="lo">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CMIMFI Dashboard</title>
     <link rel="stylesheet" href="service.css">
     <style>
@@ -100,8 +96,12 @@
                 </option>
             <?php } ?>
         </select>
-                <select name="" id="">Employee</select>
-                <select name="" id="">Location Group</select>
+
+        <select style="padding: 1px;border-radius: 2px;" name="sl_model" id="sl_model">
+            <option value="emp">Employee</option>
+            <option value="com">Location Group</option>
+        </select>
+
 
 
         <button type="submit" class="btn btn-danger btn-sm">
@@ -115,10 +115,18 @@
                 <thead>
                     <tr id="header-row-3">
                         <th scope="col" rowspan="3">ຊື່</th>
-                        <th scope="col" colspan="3">CPS</th>
+                        <th scope="col" colspan="3">ເງິນກູ້ພະນັກງານ</th>
+                        <th scope="col" colspan="3">ເງິນປະຊາຊົນ</th>
+                        <th scope="col" colspan="3">ເງິນກູ້ເພດຍິງ</th>
 
                     </tr>
                     <tr id="header-row-3">
+                        <th>ເປົ້າຫມາຍ</th>
+                        <th>ຜົນງານ</th>
+                        <th>ທຽບເປົ້າຫມາຍ</th>
+                        <th>ເປົ້າຫມາຍ</th>
+                        <th>ຜົນງານ</th>
+                        <th>ທຽບເປົ້າຫມາຍ</th>
                         <th>ເປົ້າຫມາຍ</th>
                         <th>ຜົນງານ</th>
                         <th>ທຽບເປົ້າຫມາຍ</th>
@@ -128,59 +136,9 @@
 
                 <tbody>
                     <tr>
-                        <td><button class="toggle-btn" onclick="toggleRows()"><i class="fas fa-pen"></i></button> ຍອດເຫຼືອໜ່ວຍທັງໝົດ</td>
-                        <td id=""><span></span></td>
-                        <td id="count_type1_total16"><span></span></td>
-                        <td id=""><span></span></td>
-                        <td id=""><span></span></td>
-                        <td id="count_type1_total14"><span></span></td>
-                        <td id=""><span></span></td>
-                        <td id=""><span></span></td>
-                        <td id="count_type1_total17"><span></span></td>
-                        <td id=""><span></span></td>
-
+                        <td><button class="toggle-btn" onclick="toggleRows1()"><i class="fas fa-pen"></i></button> ຍອດເຫຼືອໜ່ວຍທັງໝົດ</td>
                     </tr>
 
-                    <!-- Hidden rows for more details -->
-                    <tr id="1" class="hidden-row">
-                        <td>ຈຳນວນໜ່ວຍເກຣດ A</td>
-                        <td><span></span></td>
-                        <td id="count_type1_16A"><span></span></td>
-                        <td></td>
-
-
-                    </tr>
-                    <tr id="2" class="hidden-row">
-                        <td>ຈຳນວນໜ່ວຍເກຣດ B</td>
-                        <td><span></span></td>
-                        <td id="count_type1_16B"><span></span></td>
-                        <td></td>
-
-
-                    </tr>
-                    <tr id="3" class="hidden-row">
-                        <td>ຈຳນວນໜ່ວຍເກຣດ C</td>
-                        <td><span></span></td>
-                        <td id="count_type1_16C"><span></span></td>
-                        <td></td>
-
-
-                    </tr>
-                    <tr id="4" class="hidden-row">
-                        <td>ຈຳນວນໜ່ວຍເກຣດ D</td>
-                        <td><span></span></td>
-                        <td id="count_type1_16D"><span></span></td>
-                        <td></td>
-
-
-                    </tr>
-                    <tr id="5" class="hidden-row">
-                        <td>ຈຳນວນໜ່ວຍຕັ້ງໃໝ່ (ເດືອນ)</td>
-                        <td><span></span></td>
-                        <td id="count_com_create_type1_16"><span></span></td>
-                        <td></td>
-                    </tr>
-               
 
                 </tbody>
             </table>
@@ -188,87 +146,188 @@
 
         <!-- Script Section -->
         <script>
+            let isToggled = false; // ตัวแปรเช็คสถานะ toggle
             document.getElementById('searchForm').addEventListener('submit', function(event) {
-                event.preventDefault();
+                event.preventDefault(); // ป้องกันการโหลดหน้าใหม่
 
                 const formData = new FormData(this);
                 const params = new URLSearchParams(formData).toString();
+                const selectedModel = document.getElementById("sl_model").value; // ดึงค่าที่เลือก
 
-                fetch('sv_db.php?' + params)
+                fetch('sv1_db.php?' + params)
                     .then(response => response.json())
                     .then(data => {
-                        if (data.length > 0) {
-                            document.querySelector('#count_type1_total16 span').textContent = (data[0].count_type1_total16 || "0").toLocaleString();
-                            document.querySelector('#count_type1_total15 span').textContent = (data[0].count_type1_total15 || "0").toLocaleString();
-                            document.querySelector('#count_type1_total14 span').textContent = (data[0].count_type1_total14 || "0").toLocaleString();
-                            document.querySelector('#count_type1_total17 span').textContent = (data[0].count_type1_total17 || "0").toLocaleString();
+                        console.log("Data received:", data); // ตรวจสอบข้อมูล
 
-                            document.querySelector('#count_type1_16A span').textContent = (data[0].count_type1_16A || "0").toLocaleString();
-                            document.querySelector('#count_type1_14A span').textContent = (data[0].count_type1_14A || "0").toLocaleString();
-                            document.querySelector('#count_type1_15A span').textContent = (data[0].count_type1_15A || "0").toLocaleString();
-                            document.querySelector('#count_type1_17A span').textContent = (data[0].count_type1_17A || "0").toLocaleString();
+                        // ดึง tbody ของตาราง
+                        const tableBody = document.querySelector("#data-table tbody");
+                        tableBody.innerHTML = ""; // ล้างข้อมูลเดิมก่อน
 
-                            document.querySelector('#count_type1_16B span').textContent = (data[0].count_type1_16B || "0").toLocaleString();
-                            document.querySelector('#count_type1_14B span').textContent = (data[0].count_type1_14B || "0").toLocaleString();
-                            document.querySelector('#count_type1_15B span').textContent = (data[0].count_type1_15B || "0").toLocaleString();
-                            document.querySelector('#count_type1_17B span').textContent = (data[0].count_type1_17B || "0").toLocaleString();
+                        // แถวแรก (Header Toggle)
+                        let toggleRow = document.createElement("tr");
+                        toggleRow.innerHTML = `
+                                <td >
+                                    <button class="toggle-btn" onclick="toggleRows()">
+                                        <i class="fas fa-pen"></i>
+                                    </button> 
+                                    ຍອດເຫຼືອໜ່ວຍທັງໝົດ
+                                </td>
+                                <td colspan="9"></td>
+                           `;
+                        tableBody.appendChild(toggleRow);
 
-                            document.querySelector('#count_type1_16C span').textContent = (data[0].count_type1_16C || "0").toLocaleString();
-                            document.querySelector('#count_type1_14C span').textContent = (data[0].count_type1_14C || "0").toLocaleString();
-                            document.querySelector('#count_type1_15C span').textContent = (data[0].count_type1_15C || "0").toLocaleString();
-                            document.querySelector('#count_type1_17C span').textContent = (data[0].count_type1_17C || "0").toLocaleString();
+                        //แสดงข้อมูลเกรด A
+                        let gradeRow = document.createElement("tr");
+                        gradeRow.classList.add("toggle-row");
+                        gradeRow.style.display = isToggled ? "table-row" : "none";
 
-                            document.querySelector('#count_type1_16D span').textContent = (data[0].count_type1_16D || "0").toLocaleString();
-                            document.querySelector('#count_type1_14D span').textContent = (data[0].count_type1_14D || "0").toLocaleString();
-                            document.querySelector('#count_type1_15D span').textContent = (data[0].count_type1_15D || "0").toLocaleString();
-                            document.querySelector('#count_type1_17D span').textContent = (data[0].count_type1_17D || "0").toLocaleString();
+                        gradeRow.innerHTML = `
+                                <td colspan="2">ຈຳນວນໜ່ວຍເກຣດ A</td>
+                                <td colspan="6">${data.grade_data.count_type1_15A}</td>
+                                <td colspan="6">${data.grade_data.count_type3_15A}</td>
+                                
+                            `;
+
+                        tableBody.appendChild(gradeRow);
+                        //แสดงข้อมูลเกรด B
+                        let gradeRow3 = document.createElement("tr");
+                        gradeRow3.classList.add("toggle-row");
+                        gradeRow3.style.display = isToggled ? "table-row" : "none";
+
+                        gradeRow3.innerHTML = `
+                                <td colspan="2">ຈຳນວນໜ່ວຍເກຣດ B</td>
+                                <td colspan="6">${data.grade_data.count_type1_15B}</td>
+                                <td colspan="6">${data.grade_data.count_type3_15B}</td>
+                                
+                            `;
+
+                        tableBody.appendChild(gradeRow3);
+                        //แสดงข้อมูลเกรด c
+                        let gradeRow4 = document.createElement("tr");
+                        gradeRow4.classList.add("toggle-row");
+                        gradeRow4.style.display = isToggled ? "table-row" : "none";
+
+                        gradeRow4.innerHTML = `
+                                <td colspan="2">ຈຳນວນໜ່ວຍເກຣດ C</td>
+                                <td colspan="6">${data.grade_data.count_type1_15C}</td>
+                                <td colspan="6">${data.grade_data.count_type3_15C}</td>
+                                
+                            `;
+
+                        tableBody.appendChild(gradeRow4);
+
+                        //แสดงข้อมูลเกรด D
+                        let gradeRow5 = document.createElement("tr");
+                        gradeRow5.classList.add("toggle-row");
+                        gradeRow5.style.display = isToggled ? "table-row" : "none";
+
+                        gradeRow5.innerHTML = `
+                                <td colspan="2">ຈຳນວນໜ່ວຍເກຣດ D</td>
+                                <td colspan="6">${data.grade_data.count_type1_15D}</td>
+                                <td colspan="6">${data.grade_data.count_type3_15D}</td>
+                                
+                            `;
+
+                        tableBody.appendChild(gradeRow5);
+
+                        //แสดงข้อมูลเกรด D
+                        let gradeRow6 = document.createElement("tr");
+                        gradeRow6.classList.add("toggle-row");
+                        gradeRow6.style.display = isToggled ? "table-row" : "none";
+
+                        gradeRow6.innerHTML = `
+                                <td colspan="2">
+                                  <button class="toggle-btn" onclick="toggleRows2()">
+                                        <i class="fas fa-pen"></i>
+                                    </button>
+                                    ຈຳນວນໜ່ວຍຕັ້ງໃໝ່ (ເດືອນ)</td>
+                                <td colspan="6">${data.grade_data.count_total_create_type1}</td>
+                                <td colspan="6">${data.grade_data.count_total_create_type3} </td>
+                            `;
+
+                        tableBody.appendChild(gradeRow6);
+
+                        // วนลูปเพิ่มข้อมูลของ emp_code หรือ com_code
+                        data.com_create_data.forEach((row, index) => {
+                            let tr = document.createElement("tr");
+                            tr.classList.add("toggle-row2"); // ใส่ class สำหรับ toggle
+                            if (!isToggled) tr.style.display = "none"; // ซ่อนถ้า toggle ยังไม่ถูกกด
+                            tr.id = "row-" + index; // กำหนด ID ให้แถว
+
+                            let employee = selectedModel === "emp" ? row.emp_code : row.com_code;
+                            let count_create_type1 = row.count_create_type1;
+                            let count_create_type3 = row.count_create_type3;
+
+                            tr.innerHTML = `
+                                    <td colspan="2">${employee}</td>
+                                    <td colspan="6">${count_create_type1}</td>
+                                    <td colspan="6">${count_create_type3}</td>
+                        `;
+                            tableBody.appendChild(tr);
+                        });
 
 
 
-                        } else {
-                            // จัดการกรณีไม่มีข้อมูล
-                        }
+                        let gradeRow7 = document.createElement("tr");
+                        gradeRow7.classList.add("toggle-row");
+                        gradeRow7.style.display = isToggled ? "table-row" : "none";
+
+                        gradeRow7.innerHTML = `
+                                <td colspan="2">
+                                 <button class="toggle-btn" onclick="toggleRows3()">
+                                        <i class="fas fa-pen"></i>
+                                    </button> ຈຳນວນໜ່ວຍຢ້ຽມຍາມ (ເດືອນ)</td>
+                                <td colspan="6">${data.grade_data.count_actity_type1}</td>
+                                <td colspan="6">${data.grade_data.count_actity_type3}</td>
+                            `;
+
+                        tableBody.appendChild(gradeRow7);
+
+
+                        // วนลูปเพิ่มข้อมูลของ emp_code หรือ com_code
+                        data.activity_data.forEach((row, index) => {
+                            let tr = document.createElement("tr");
+                            tr.classList.add("toggle-row3"); // ใส่ class สำหรับ toggle
+                            if (!isToggled) tr.style.display = "none"; // ซ่อนถ้า toggle ยังไม่ถูกกด
+                            tr.id = "row-" + index; // กำหนด ID ให้แถว
+
+                            let employee = selectedModel === "emp" ? row.emp_code : row.com_code;
+                            let type_1_count = row.type_1_count;
+                            let type_3_count = row.type_3_count;
+
+                            tr.innerHTML = `
+                                    <td colspan="2">${employee}</td>
+                                    <td colspan="6">${type_1_count}</td>
+                                    <td colspan="6">${type_3_count}</td>
+                        `;
+                            tableBody.appendChild(tr);
+                        });
                     })
                     .catch(error => console.error('Error:', error));
             });
 
-
+            // ฟังก์ชัน toggle แถวที่ซ่อนอยู่
             function toggleRows() {
-                var rows = ['1', '2', '3', '4', '5', '6']; // Add more row IDs here if needed
-                rows.forEach(function(rowId) {
-                    var row = document.getElementById(rowId);
-                    if (row.style.display === "none" || row.style.display === "") {
-                        row.style.display = "table-row";
-                    } else {
-                        row.style.display = "none";
-                    }
+                isToggled = !isToggled; // สลับค่า true/false
+                document.querySelectorAll(".toggle-row").forEach(row => {
+                    row.style.display = isToggled ? "table-row" : "none";
                 });
             }
 
             function toggleRows2() {
-                var rows = ['7', '8', '9', '10', '11', '12']; // Add more row IDs here if needed
-                rows.forEach(function(rowId) {
-                    var row = document.getElementById(rowId);
-                    if (row.style.display === "none" || row.style.display === "") {
-                        row.style.display = "table-row";
-                    } else {
-                        row.style.display = "none";
-                    }
+                let rows = document.querySelectorAll(".toggle-row2");
+                rows.forEach(row => {
+                    row.style.display = row.style.display === "none" ? "table-row" : "none";
                 });
             }
 
             function toggleRows3() {
-                var rows = ['13', '14', '15']; // Add more row IDs here if needed
-                rows.forEach(function(rowId) {
-                    var row = document.getElementById(rowId);
-                    if (row.style.display === "none" || row.style.display === "") {
-                        row.style.display = "table-row";
-                    } else {
-                        row.style.display = "none";
-                    }
+                let rows = document.querySelectorAll(".toggle-row3");
+                rows.forEach(row => {
+                    row.style.display = row.style.display === "none" ? "table-row" : "none";
                 });
             }
         </script>
-</body>
+
 
 </html>

@@ -2,11 +2,79 @@
 require_once 'connect.php'; // รวมไฟล์การเชื่อมต่อฐานข้อมูล
 
 if (isset(($_GET['enddate']))) {
-    $start_date = $_GET['startdate'];// รับค่าวันที่เริ่มต้น
-    $end_date = $_GET['enddate'];// รับค่าวันที่สิ้นสุด
+    $start_date = $_GET['startdate']; // รับค่าวันที่เริ่มต้น
+    $end_date = $_GET['enddate']; // รับค่าวันที่สิ้นสุด
 
+ // ส่วนที่ 2: นับลูกค้าที่ปิดสัญญา (closed)
+ function checkStatusclose($date1, $date2) {
+    if (!$date1 || $date1 == "0000-00-00") {
+        $date1 = "ว่าง";
+    }
+    if (!$date2 || $date2 == "0000-00-00") {
+        $date2 = "ว่าง";
+    }
 
+    if ($date1 === "ว่าง" || $date2 === "ว่าง") {
+        return "unknown";
+    }
 
+    $ym1 = date('Y-m', strtotime($date1));
+    $ym2 = date('Y-m', strtotime($date2));
+
+    return ($ym1 == $ym2) ? "owe" : "closed";
+}
+
+// ดึงข้อมูลทั้งหมดจากฐานข้อมูล
+$sql = "SELECT 
+    loan_cus_code_fk,
+    loan_receive_finish_date,
+    loan_closed_date,
+    cus_prov_id_fk
+    FROM tbl_loan
+    ORDER BY loan_cus_code_fk, loan_receive_finish_date";
+
+$result = $conn->query($sql);
+
+if (!$result) {
+    die("Query Failed: " . $conn->error);
+}
+
+$rows = $result->fetch_all(MYSQLI_ASSOC);
+
+// ตัวแปรเก็บ count closed รวม
+$count_closed = 0;
+$filtered_closed_count = 0;
+
+// ตัวแปรเก็บ count closed แยกตามจังหวัด (ทั้งหมด)
+$province_closed_count = [14 => 0, 15 => 0, 16 => 0, 17 => 0];
+
+// ตัวแปรเก็บ count closed แยกตามจังหวัด (เฉพาะช่วงวันที่)
+$filtered_province_closed_count = [14 => 0, 15 => 0, 16 => 0, 17 => 0];
+
+for ($i = 0; $i < count($rows); $i++) {
+    $status = "unknown";
+    if (($i + 1) < count($rows)) {
+        $status = checkStatusclose($rows[$i]['loan_closed_date'], $rows[$i + 1]['loan_receive_finish_date']);
+    }
+
+    if ($status === "closed") {
+        $count_closed++;
+
+        // เช็คว่าจังหวัดอยู่ในกลุ่มที่ต้องการหรือไม่
+        $province_id = intval($rows[$i]['cus_prov_id_fk']);
+        if (isset($province_closed_count[$province_id])) {
+            $province_closed_count[$province_id]++;
+
+            // กรองข้อมูลเฉพาะช่วงวันที่
+            if (!empty($start_date) && !empty($end_date)) {
+                if ($rows[$i]['loan_closed_date'] >= $start_date && $rows[$i]['loan_closed_date'] <= $end_date) {
+                    $filtered_closed_count++;
+                    $filtered_province_closed_count[$province_id]++;
+                }
+            }
+        }
+    }
+}
     // สร้างคำสั่ง SQL สำหรับ tbl_loan
     $sql_com_gade = "SELECT 
     COUNT(CASE WHEN com_group.com_type = '1' AND grade.com_grade_lv = 'A' AND LEFT(com_act.comact_com_code_fk, 2) = '15' THEN 1 END) AS count_type1_15A,
@@ -93,10 +161,6 @@ LEFT JOIN `tbl_company_activity` AS com_act
 
     $resultactivity = mysqli_stmt_get_result($stmt1);
     $row_activity = mysqli_fetch_assoc($resultactivity);
-
-
-
-
 
     //ดืงข้อมุลจาก create tbl_company_group
     $sql_com_create = "SELECT
@@ -253,7 +317,6 @@ WHERE loan_receive_finish_date BETWEEN ? and ?";
             if ($row['additional_status'] == 'อ่วย' && $row['cus_prov_id_fk'] == '17') {
                 $count_owe17++;
             }
-   
         }
 
         // Return the counts
@@ -270,34 +333,34 @@ WHERE loan_receive_finish_date BETWEEN ? and ?";
             'owe15' => $count_owe15,
             'owe16' => $count_owe16,
             'owe17' => $count_owe17,
-   
-       
+
+
         ];
     }
 
-    
-   // Call the countStatus function and assign the result to $loan_status_counts
-$loan_status_counts = countStatus($conn, $start_date, $end_date);
 
-// Now, you can safely access the values
-$new_status_count14 = $loan_status_counts['new_status14'];
-$new_status_count15 = $loan_status_counts['new_status15'];
-$new_status_count16 = $loan_status_counts['new_status16'];
-$new_status_count17 = $loan_status_counts['new_status17'];
+    // Call the countStatus function and assign the result to $loan_status_counts
+    $loan_status_counts = countStatus($conn, $start_date, $end_date);
 
-$customer_return_count14 = $loan_status_counts['customer_return14'];
-$customer_return_count15 = $loan_status_counts['customer_return15'];
-$customer_return_count16 = $loan_status_counts['customer_return16'];
-$customer_return_count17 = $loan_status_counts['customer_return17'];
+    // Now, you can safely access the values
+    $new_status_count14 = $loan_status_counts['new_status14'];
+    $new_status_count15 = $loan_status_counts['new_status15'];
+    $new_status_count16 = $loan_status_counts['new_status16'];
+    $new_status_count17 = $loan_status_counts['new_status17'];
 
-$owe_count14 = $loan_status_counts['owe14'];
-$owe_count15 = $loan_status_counts['owe15'];
-$owe_count16 = $loan_status_counts['owe16'];
-$owe_count17 = $loan_status_counts['owe17'];
+    $customer_return_count14 = $loan_status_counts['customer_return14'];
+    $customer_return_count15 = $loan_status_counts['customer_return15'];
+    $customer_return_count16 = $loan_status_counts['customer_return16'];
+    $customer_return_count17 = $loan_status_counts['customer_return17'];
+
+    $owe_count14 = $loan_status_counts['owe14'];
+    $owe_count15 = $loan_status_counts['owe15'];
+    $owe_count16 = $loan_status_counts['owe16'];
+    $owe_count17 = $loan_status_counts['owe17'];
 
 
 
-$sql_count_open_new = "SELECT     
+    $sql_count_open_new = "SELECT     
     COUNT(DISTINCT CASE WHEN cus_prov_id_fk = 14 THEN loan_cus_code_fk END) AS prov_14,    
     COUNT(DISTINCT CASE WHEN cus_prov_id_fk = 15 THEN loan_cus_code_fk END) AS prov_15,    
     COUNT(DISTINCT CASE WHEN cus_prov_id_fk = 16 THEN loan_cus_code_fk END) AS prov_16,    
@@ -307,16 +370,17 @@ WHERE loan_receive_finish_date BETWEEN ? AND ?;
 
 ";
 
-$count_open_new = mysqli_prepare($conn, $sql_count_open_new);
-mysqli_stmt_bind_param($count_open_new, "ss", $start_date, $end_date);
-mysqli_stmt_execute($count_open_new);
-$resultcount_open_new = mysqli_stmt_get_result($count_open_new);
-$row_count_open_new = mysqli_fetch_assoc($resultcount_open_new);
+    $count_open_new = mysqli_prepare($conn, $sql_count_open_new);
+    mysqli_stmt_bind_param($count_open_new, "ss", $start_date, $end_date);
+    mysqli_stmt_execute($count_open_new);
+    $resultcount_open_new = mysqli_stmt_get_result($count_open_new);
+    $row_count_open_new = mysqli_fetch_assoc($resultcount_open_new);
 
+    //
+    function customer_remain($conn, $end_date)
+    {
 
-function customer_remain($conn, $end_date){
-
-    $sql_cus_remain = "SELECT * FROM( 
+        $sql_cus_remain = "SELECT * FROM( 
         SELECT loan_crd_no, loan_cus_code_fk, loan_receive_finish_date, loan_closed_date,cus_prov_id_fk,
             CASE WHEN (? >= loan_receive_finish_date AND ? < loan_closed_date) 
             OR (? >= loan_receive_finish_date
@@ -326,118 +390,90 @@ function customer_remain($conn, $end_date){
     ) AS count_total
     WHERE loan_receive_finish_date BETWEEN '2015-01-01' AND ? 
     ORDER BY `loan_cus_code_fk`, `loan_closed_date`";
-    
-    
-
-  // Prepare statement
-  $stmt_cus_remain = mysqli_prepare($conn, $sql_cus_remain);
-  mysqli_stmt_bind_param($stmt_cus_remain, "ssss", $end_date, $end_date, $end_date, $end_date);
-  mysqli_stmt_execute($stmt_cus_remain);
-  
-  $result_cus_remain = mysqli_stmt_get_result($stmt_cus_remain);
-
-  // Initialize counters
-  $count_cus_remain14 = 0;
-  $count_cus_remain15 = 0;
-  $count_cus_remain16 = 0;
-  $count_cus_remain17 = 0;
-
-  // Loop through results and count based on conditions
-  while ($row1 = mysqli_fetch_assoc($result_cus_remain)) {
-      if ($row1['count_status'] == 'ນັບ' && $row1['cus_prov_id_fk'] == '14') {
-          $count_cus_remain14++;
-      }
-      if ($row1['count_status'] == 'ນັບ' && $row1['cus_prov_id_fk'] == '15') {
-          $count_cus_remain15++;
-      }
-      if ($row1['count_status'] == 'ນັບ' && $row1['cus_prov_id_fk'] == '16') {
-          $count_cus_remain16++;
-      }
-      if ($row1['count_status'] == 'ນັບ' && $row1['cus_prov_id_fk'] == '17') {
-          $count_cus_remain17++;
-      }
 
 
-  }
 
-  // Return the counts
-  return [
-      'new_status14' => $count_cus_remain14,
-      'new_status15' => $count_cus_remain15,
-      'new_status16' => $count_cus_remain16,
-      'new_status17' => $count_cus_remain17,
- 
- 
-  ];
-}
-$loan_cus_remain = customer_remain($conn, $start_date, $end_date);
-$count_cus_remain14 = $loan_cus_remain['new_status14'];
-$count_cus_remain15 = $loan_cus_remain['new_status15'];
-$count_cus_remain16 = $loan_cus_remain['new_status16'];
-$count_cus_remain17 = $loan_cus_remain['new_status17'];
+        // Prepare statement
+        $stmt_cus_remain = mysqli_prepare($conn, $sql_cus_remain);
+        mysqli_stmt_bind_param($stmt_cus_remain, "ssss", $end_date, $end_date, $end_date, $end_date);
+        mysqli_stmt_execute($stmt_cus_remain);
 
-function customer_close($conn, $start_date, $end_date) {
-    // กำหนดค่าตัวแปร session สำหรับ MySQL
-    mysqli_query($conn, "SET @prev_cus = NULL, @prev_closed_date = NULL");
+        $result_cus_remain = mysqli_stmt_get_result($stmt_cus_remain);
 
-    // คำสั่ง SQL แก้ไขให้ถูกต้อง
-    $sql_cus_remain = "SELECT 
-        loan_cus_code_fk,
-        loan_receive_finish_date,
-        loan_closed_date,
-        cus_prov_id_fk,
-        @prev_count_close AS count_close,
-        @prev_count_close := 
-            CASE 
-                WHEN @prev_cus = loan_cus_code_fk 
-                     AND DATE_FORMAT(@prev_closed_date, '%Y-%m-%d') = DATE_FORMAT(loan_receive_finish_date, '%Y-%m-%d')
-                THEN 'owe' 
-                WHEN @prev_cus = loan_cus_code_fk 
-                THEN 'close' 
-                ELSE '' 
-            END,
-        @prev_cus := loan_cus_code_fk,
-        @prev_closed_date := loan_closed_date
-    FROM tbl_loan
-    WHERE loan_receive_finish_date BETWEEN ? AND ?
-    ORDER BY loan_cus_code_fk, loan_receive_finish_date";
+        // Initialize counters
+        $count_cus_remain14 = 0;
+        $count_cus_remain15 = 0;
+        $count_cus_remain16 = 0;
+        $count_cus_remain17 = 0;
 
-    // Prepare statement
-    $stmt_cus_remain = mysqli_prepare($conn, $sql_cus_remain);
-    mysqli_stmt_bind_param($stmt_cus_remain, "ss", $start_date, $end_date);
-    mysqli_stmt_execute($stmt_cus_remain);
-    
-    $result_count_close = mysqli_stmt_get_result($stmt_cus_remain);
-
-    // Initialize counters
-    $count_close = [
-        '14' => 0,
-        '15' => 0,
-        '16' => 0,
-        '17' => 0
-    ];
-
-    // Loop through results and count based on conditions
-    while ($row1 = mysqli_fetch_assoc($result_count_close)) {
-        if ($row1['count_close'] == 'close' && isset($count_close[$row1['cus_prov_id_fk']])) {
-            $count_close[$row1['cus_prov_id_fk']]++;
+        // Loop through results and count based on conditions
+        while ($row1 = mysqli_fetch_assoc($result_cus_remain)) {
+            if ($row1['count_status'] == 'ນັບ' && $row1['cus_prov_id_fk'] == '14') {
+                $count_cus_remain14++;
+            }
+            if ($row1['count_status'] == 'ນັບ' && $row1['cus_prov_id_fk'] == '15') {
+                $count_cus_remain15++;
+            }
+            if ($row1['count_status'] == 'ນັບ' && $row1['cus_prov_id_fk'] == '16') {
+                $count_cus_remain16++;
+            }
+            if ($row1['count_status'] == 'ນັບ' && $row1['cus_prov_id_fk'] == '17') {
+                $count_cus_remain17++;
+            }
         }
+
+        // Return the counts
+        return [
+            'new_status14' => $count_cus_remain14,
+            'new_status15' => $count_cus_remain15,
+            'new_status16' => $count_cus_remain16,
+            'new_status17' => $count_cus_remain17,
+
+
+        ];
     }
+    $loan_cus_remain = customer_remain($conn, $start_date, $end_date);
+    $count_cus_remain14 = $loan_cus_remain['new_status14'];
+    $count_cus_remain15 = $loan_cus_remain['new_status15'];
+    $count_cus_remain16 = $loan_cus_remain['new_status16'];
+    $count_cus_remain17 = $loan_cus_remain['new_status17'];
 
-    // Return the counts
-    return [
-        'new_count_close14' => $count_close['14'],
-        'new_count_close15' => $count_close['15'],
-        'new_count_close16' => $count_close['16'],
-        'new_count_close17' => $count_close['17'],
-    ];
-}
 
-$loan_count_close = customer_close($conn, $start_date, $end_date);
-$count_count_close14 = $loan_count_close['new_count_close14'];
-$count_count_close15 = $loan_count_close['new_count_close15'];
-$count_count_close16 = $loan_count_close['new_count_close16'];
-$count_count_close17 = $loan_count_close['new_count_close17'];
+
+
+    $sql_cus_out_ct = "SELECT 
+    COUNT(CASE WHEN cus_prov_id_fk = 16 THEN 1 END) AS count_16_out_ct,
+    COUNT(CASE WHEN cus_prov_id_fk = 15 THEN 1 END) AS count_15_out_ct,
+    COUNT(CASE WHEN cus_prov_id_fk = 14 THEN 1 END) AS count_14_out_ct,
+    COUNT(CASE WHEN cus_prov_id_fk = 17 THEN 1 END) AS count_17_out_ct,
+    COUNT(*) AS total_count
+FROM (
+    SELECT 
+        `loan_receive_finish_date`, 
+        `loan_period`, 
+        `loan_closed_date`,
+        `cus_prov_id_fk`,
+        DATE_ADD(`loan_receive_finish_date`, INTERVAL `loan_period` MONTH) AS `new_date`
+    FROM `tbl_loan`
+) AS subquery
+WHERE new_date BETWEEN ? AND ?
+AND loan_closed_date IS NULL;"; // ລູກຄ້າຫມົດສັນຍາ
+
+    // เตรียมคำสั่ง SQL
+    $count_cus_out_ct = mysqli_prepare($conn, $sql_cus_out_ct);
+
+    // ผูกค่าพารามิเตอร์
+    mysqli_stmt_bind_param($count_cus_out_ct, "ss", $start_date, $end_date);
+
+    // รันคำสั่ง SQL
+    mysqli_stmt_execute($count_cus_out_ct);
+
+    // ดึงผลลัพธ์
+    $resultcount_cus_out_ct = mysqli_stmt_get_result($count_cus_out_ct);
+    $row_count_cus_out_ct = mysqli_fetch_assoc($resultcount_cus_out_ct);
+
+
+
 
     $data = [];
     if (mysqli_num_rows($result)  > 0) {
@@ -540,6 +576,12 @@ $count_count_close17 = $loan_count_close['new_count_close17'];
             $row_count_open_loan_new16 = isset($row_count_open_new['prov_16']) ? (float)str_replace(',', '', $row_count_open_new['prov_16']) : 0;
             $row_count_open_loan_new17 = isset($row_count_open_new['prov_17']) ? (float)str_replace(',', '', $row_count_open_new['prov_17']) : 0;
 
+            $count_14_out_ct = isset($row_count_cus_out_ct['count_14_out_ct']) ? (float)str_replace(',', '', $row_count_cus_out_ct['count_14_out_ct']) : 0;
+            $count_15_out_ct = isset($row_count_cus_out_ct['count_15_out_ct']) ? (float)str_replace(',', '', $row_count_cus_out_ct['count_15_out_ct']) : 0;
+            $count_17_out_ct = isset($row_count_cus_out_ct['count_17_out_ct']) ? (float)str_replace(',', '', $row_count_cus_out_ct['count_17_out_ct']) : 0;
+            $count_16_out_ct = isset($row_count_cus_out_ct['count_16_out_ct']) ? (float)str_replace(',', '', $row_count_cus_out_ct['count_16_out_ct']) : 0;
+
+
 
 
             // เก็บค่าผลลัพธ์ โดยใช้ค่าต้นฉบับจากฐานข้อมูล
@@ -564,7 +606,7 @@ $count_count_close17 = $loan_count_close['new_count_close17'];
                 'count_type1_17D' => $count_type1_17D,
                 'count_type1_14D' => $count_type1_14D,
 
-                'count_type2_15A' => $count_type2_15A,
+                'count_type2_15AA' => $count_type2_15A,
                 'count_type2_16A' => $count_type2_16A,
                 'count_type2_17A' => $count_type2_17A,
                 'count_type2_14A' => $count_type2_14A,
@@ -661,13 +703,17 @@ $count_count_close17 = $loan_count_close['new_count_close17'];
                 'count_cus_remain16' => $count_cus_remain16,
                 'count_cus_remain17' => $count_cus_remain17,
 
-                'count_count_close14' => $count_count_close14,
-                'count_count_close15' => $count_count_close15,
-                'count_count_close16' => $count_count_close16,
-                'count_count_close17' => $count_count_close17,
+                'count_14_out_ct' => $count_14_out_ct,
+                'count_15_out_ct' => $count_15_out_ct,
+                'count_16_out_ct' => $count_16_out_ct,
+                'count_17_out_ct' => $count_17_out_ct,
 
-           
-       
+
+                'filtered_closed_count' => $filtered_closed_count,
+                'province_closed_count' => $province_closed_count,
+                'filtered_province_closed_count' => $filtered_province_closed_count
+
+
 
             ];
         }
