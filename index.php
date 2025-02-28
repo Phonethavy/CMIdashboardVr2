@@ -19,7 +19,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="st1.css">
+    <link rel="stylesheet" href="css/st1.css">
     <link rel="stylesheet" href="service.css">
     <style>
            body {
@@ -38,10 +38,10 @@
 </div>
         <nav>
             <ul>
-                <li><a href="index.php"><i class="fa-solid fa-house-chimney"></i></i> Home</a></li>
-                <li><a href="kpi.php"><i class="far fa-chart-bar"></i>KPI</a></li>
-                <li><a href="act.php"><i class="fas fa-dollar-sign"></i>Financial</a></li>
-                <li><a href="service.php"><i class="fas fa-id-card"></i>Service</a></li>
+            <li><a href="index.php"><i class="fa-solid fa-house-chimney"></i></i> Home</a></li>
+                    <li><a href="page1_cmi_kpi/kpi.php"><i class="far fa-chart-bar"></i>KPI</a></li>
+                    <li><a href="page1_cmi_act/act.php"><i class="fas fa-dollar-sign"></i>Financial</a></li>
+                    <li><a href="page1_cmi_sv/service.php"><i class="fas fa-id-card"></i>Service</a></li>
             </ul>
         </nav>
         <div class="profile">

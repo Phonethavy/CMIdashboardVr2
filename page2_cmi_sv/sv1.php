@@ -1,8 +1,10 @@
-
 <head>
     <title>CMIMFI Dashboard</title>
-    
+
     <style>
+        * {
+    font-family: 'Noto Sans Lao', 'Samsung Sans','Phetsarath OT';
+}
         table {
             width: 100%;
             border-collapse: collapse;
@@ -20,6 +22,7 @@
         th {
             background-color: #BA1C1C;
             color: white;
+            text-align: center;
         }
 
         tr:nth-child(even) {
@@ -70,6 +73,7 @@
             text-transform: none;
             padding: 1px;
         }
+
     </style>
 </head>
 <?php include("../navbar/header.php"); ?>
@@ -115,10 +119,10 @@
             <table style="border-width: 0.1px;" class="table1" id="data-table">
                 <thead>
                     <tr id="header-row-3">
-                        <th scope="col" rowspan="3">ຊື່</th>
-                        <th scope="col" colspan="3">ເງິນກູ້ພະນັກງານ</th>
-                        <th scope="col" colspan="3">ເງິນປະຊາຊົນ</th>
-                        <th scope="col" colspan="3">ເງິນກູ້ເພດຍິງ</th>
+                        <th style="text-align: center;" scope="col" rowspan="3">ຊື່</th>
+                        <th style="text-align: center;" scope="col" colspan="3">ເງິນກູ້ພະນັກງານ</th>
+                        <th style="text-align: center;" scope="col" colspan="3">ເງິນປະຊາຊົນ</th>
+                        <th style="text-align: center;" scope="col" colspan="3">ເງິນກູ້ເພດຍິງ</th>
 
                     </tr>
                     <tr id="header-row-3">
@@ -260,7 +264,8 @@
                             let count_create_type3 = row.count_create_type3;
 
                             tr.innerHTML = `
-                                    <td colspan="2">${employee}</td>
+                                    <td colspan="1">${employee}</td>
+                                    <td colspan="1"></td>
                                     <td colspan="6">${count_create_type1}</td>
                                     <td colspan="6">${count_create_type3}</td>
                         `;
@@ -274,10 +279,11 @@
                         gradeRow7.style.display = isToggled ? "table-row" : "none";
 
                         gradeRow7.innerHTML = `
-                                <td colspan="2">
+                                <td colspan="1">
                                  <button class="toggle-btn" onclick="toggleRows3()">
                                         <i class="fas fa-pen"></i>
                                     </button> ຈຳນວນໜ່ວຍຢ້ຽມຍາມ (ເດືອນ)</td>
+                                <td colspan="1"></td>
                                 <td colspan="6">${data.grade_data.count_actity_type1}</td>
                                 <td colspan="6">${data.grade_data.count_actity_type3}</td>
                             `;
@@ -295,9 +301,11 @@
                             let employee = selectedModel === "emp" ? row.emp_code : row.com_code;
                             let type_1_count = row.type_1_count;
                             let type_3_count = row.type_3_count;
+                            let ser_goal_accno = row.ser_goal_accno;
 
                             tr.innerHTML = `
-                                    <td colspan="2">${employee}</td>
+                                    <td colspan="1">${employee}</td>
+                                    <td colspan="1">${ser_goal_accno}</td>
                                     <td colspan="6">${type_1_count}</td>
                                     <td colspan="6">${type_3_count}</td>
                         `;
@@ -331,4 +339,4 @@
         </script>
 
 
-</html>
+        </html>

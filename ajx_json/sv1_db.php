@@ -113,16 +113,22 @@ LEFT JOIN `tbl_company_activity` AS com_act
     $sql_actity = "SELECT 
        emp.emp_fname,
         emp.emp_lname,
+         goal.ser_goal_amnt,
+        goal.ser_goal_accno,
         com_act.comact_emp_code_fk, 
         LEFT(com_act.comact_com_code_fk, 2) AS province_actity,
          com_act.comact_com_code_fk,
+         goal.ser_goal_emp_code_fk,
         SUM(com_group.com_type = '1') AS type_1_count,
         SUM(com_group.com_type = '3') AS type_3_count
     FROM `tbl_company_group` AS com_group
     LEFT JOIN `tbl_company_activity` AS com_act 
         ON com_group.com_code = com_act.comact_com_code_fk 
-     LEFT JOIN tbl_employee as emp 
+    LEFT JOIN tbl_employee as emp
         ON emp.emp_code = com_act.comact_emp_code_fk
+    LEFT JOIN `tbl_service_goal` AS goal 
+        ON goal.ser_goal_emp_code_fk = com_act.comact_emp_code_fk
+        AND goal.ser_goal_indi_code_fk = 'SD02'
     WHERE com_act.comact_date BETWEEN ? AND ? and LEFT(com_act.comact_com_code_fk, 2)= ?
     GROUP BY $groupByField
     
@@ -130,9 +136,9 @@ LEFT JOIN `tbl_company_activity` AS com_act
 
     $stmt1 = mysqli_prepare($conn, $sql_actity);
     mysqli_stmt_bind_param($stmt1, "sss", $start_date, $end_date, $location);
-
     mysqli_stmt_execute($stmt1);
     $resultactivity = mysqli_stmt_get_result($stmt1);
+
 
     // เก็บผลลัพธ์จากทั้งสองตาราง
     $data = [];
@@ -185,7 +191,8 @@ LEFT JOIN `tbl_company_activity` AS com_act
                 'com_code' => $row_activity['comact_com_code_fk'],
                 'province_actity' => $row_activity['province_actity'],
                 'type_1_count' => (int) $row_activity['type_1_count'],
-                'type_3_count' => (int) $row_activity['type_3_count']
+                'type_3_count' => (int) $row_activity['type_3_count'],
+                'ser_goal_accno' => $row_activity['ser_goal_accno'] ?? '' 
             ];
         }
     }

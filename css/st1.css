@@ -1,6 +1,6 @@
 /* ตั้งค่าทั่วไป */
 body {
-    font-family: 'Noto Sans Lao', 'Samsung Sans';
+    font-family: 'Noto Sans Lao', 'Samsung Sans','Phetsarath OT';
     margin: 0;
     padding: 0;
     text-align: center;
@@ -8,7 +8,7 @@ body {
 }
 
 * {
-    font-family: 'Noto Sans Lao', 'Samsung Sans';
+    font-family: 'Noto Sans Lao', 'Samsung Sans','Phetsarath OT';
 }
 
 /* Header */
@@ -211,4 +211,5 @@ button, input {
     background-color: #c00;
     z-index: 2;
     width: 100%;
+    text-align: center;
 }
