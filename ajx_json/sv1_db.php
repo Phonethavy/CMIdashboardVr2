@@ -12,8 +12,7 @@ if (isset($_GET['enddate'])) {
     $groupByFieldcreate = ($sl_model === 'emp') ? 'com_creator_emp_code_fk' : 'com_code';
 
     // SQL สำหรับ tbl_company_grade
-    $sql_com_gade = "    
-        SELECT 
+    $sql_com_gade = " SELECT 
     COUNT(CASE WHEN com_group.com_type = '1' AND grade.com_grade_lv = 'A' AND LEFT(com_act.comact_com_code_fk, 2) = ? THEN 1 END) AS count_type1_15A,
     COUNT(CASE WHEN com_group.com_type = '1' AND grade.com_grade_lv = 'B' AND LEFT(com_act.comact_com_code_fk, 2) = ? THEN 1 END) AS count_type1_15B,
     COUNT(CASE WHEN com_group.com_type = '1' AND grade.com_grade_lv = 'C' AND LEFT(com_act.comact_com_code_fk, 2) = ? THEN 1 END) AS count_type1_15C,
@@ -27,7 +26,11 @@ if (isset($_GET['enddate'])) {
     COUNT(CASE WHEN com_group.com_type = '3' AND grade.com_grade_lv = 'A' AND LEFT(com_act.comact_com_code_fk, 2) = ? THEN 1 END) AS count_type3_15A,
     COUNT(CASE WHEN com_group.com_type = '3' AND grade.com_grade_lv = 'B' AND LEFT(com_act.comact_com_code_fk, 2) = ? THEN 1 END) AS count_type3_15B,
     COUNT(CASE WHEN com_group.com_type = '3' AND grade.com_grade_lv = 'C' AND LEFT(com_act.comact_com_code_fk, 2) = ? THEN 1 END) AS count_type3_15C,
-    COUNT(CASE WHEN com_group.com_type = '3' AND grade.com_grade_lv = 'D' AND LEFT(com_act.comact_com_code_fk, 2) = ? THEN 1 END) AS count_type3_15D
+    COUNT(CASE WHEN com_group.com_type = '3' AND grade.com_grade_lv = 'D' AND LEFT(com_act.comact_com_code_fk, 2) = ? THEN 1 END) AS count_type3_15D,
+    
+    COUNT(CASE WHEN com_group.com_type = '1' AND LEFT(com_act.comact_com_code_fk, 2) = ? THEN 1 END) AS count_type1_total,
+    COUNT(CASE WHEN com_group.com_type = '3' AND LEFT(com_act.comact_com_code_fk, 2) = ? THEN 1 END) AS count_type3_total
+   
 FROM `tbl_company_group` AS com_group
 LEFT JOIN `tbl_company_grade` AS grade 
     ON com_group.com_code = grade.com_grade_com_code_fk
@@ -38,8 +41,10 @@ LEFT JOIN `tbl_company_activity` AS com_act
     // เตรียม Statement
     $stmt = mysqli_prepare($conn, $sql_com_gade);
     mysqli_stmt_bind_param(
-        $stmt,
-        "sssssssssssss",
+$stmt,
+"sssssssssssssss",
+  $location,
+ $location,
         $location,
         $location,
         $location,
@@ -162,6 +167,9 @@ LEFT JOIN `tbl_company_activity` AS com_act
             'count_type3_15B' => (int) $row['count_type3_15B'],
             'count_type3_15C' => (int) $row['count_type3_15C'],
             'count_type3_15D' => (int) $row['count_type3_15D'],
+            'count_type1_total' => (int) $row['count_type1_total'],
+            'count_type3_total' => (int) $row['count_type3_total'],
+        
             'count_actity_type1' => (int) $row_activity_toltal['count_actity_type1'], // ดึงค่าจากแหล่งที่ถูกต้อง
             'count_actity_type3' => (int) $row_activity_toltal['count_actity_type3'], // ดึงค่าจากแหล่งที่ถูกต้อง
             'count_total_create_type1' => (int) $row_com_create_toltal['count_total_create_type1'], // ดึงค่าจากแหล่งที่ถูกต้อง
@@ -192,7 +200,7 @@ LEFT JOIN `tbl_company_activity` AS com_act
                 'province_actity' => $row_activity['province_actity'],
                 'type_1_count' => (int) $row_activity['type_1_count'],
                 'type_3_count' => (int) $row_activity['type_3_count'],
-                'ser_goal_accno' => $row_activity['ser_goal_accno'] ?? '' 
+                'ser_goal_accno' => $row_activity['ser_goal_accno'] ?? ''
             ];
         }
     }

@@ -8,7 +8,7 @@ if (isset($_GET['year1']) && isset($_GET['year2'])) {
     $data = [];
     // Prepare SQL query for current year
     $sqlCurrentYear = "SELECT 
-             date,
+             act_date,
                    FORMAT(SUM(CASE 
                         WHEN act_gl_code IN ('3101000','3202000','3203000','3208000','3401200','3402200','3800000','3908000','5101311','5101312','5102132','5102232','5102870',
                         '5102880','5102900','5109300','5506200','5508400','5701200','5704110','5704120','5704220','5705000') 
@@ -236,7 +236,7 @@ FORMAT(SUM(CASE
 WHEN nim_catalog_code IN ('F060M001','F120M001','F048M001','F048M002','F036M004','F036M005','F036M006','F048M003','F006M002','F012M004','F024M002','F012M005','F024M003','F048M004','F048M005','F060M003','F012M006','F024M005') 
 THEN tbl_nim.nim_amount * tbl_nim.nim_rate ELSE 0 END), 'N0') AS 'sumfix2rate'
  FROM `tbl_nim`
-WHERE year(`date`) = '$yearCurrent' AND month(date ) = '$month_str'"; // Get data for December only
+WHERE year(`nim_date`) = '$yearCurrent' AND month(nim_date ) = '$month_str'"; // Get data for December only
 
 $resultnii_nim = mysqli_query($conn, $sqlnii_nim);
 
@@ -266,7 +266,7 @@ FORMAT(SUM(CASE
         WHEN act_gl_code IN ('1203121','1203122','1283121','1283122','1291131','1291132','1292131','1292132','1293131','1293132') 
         THEN tbl_atc.act_amount_money ELSE 0 END), 'N0') AS 'PreviousYearloan_balance99'
 FROM tbl_atc
-WHERE  year(`date`) = '$yearPrevious' AND month(date )= '$month_str'"; // Get data December only
+WHERE  year(`act_date`) = '$yearPrevious' AND month(act_date )= '$month_str'"; // Get data December only
 
 $resultPrevious = mysqli_query($conn, $sqlPreviousYear);
 

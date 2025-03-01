@@ -170,14 +170,18 @@
 
                         // แถวแรก (Header Toggle)
                         let toggleRow = document.createElement("tr");
+                        
                         toggleRow.innerHTML = `
-                                <td >
+                                <td  colspan="2">
                                     <button class="toggle-btn" onclick="toggleRows()">
                                         <i class="fas fa-pen"></i>
                                     </button> 
                                     ຍອດເຫຼືອໜ່ວຍທັງໝົດ
                                 </td>
-                                <td colspan="9"></td>
+                                <td colspan="6">${data.grade_data.count_type1_total}</td>
+                                <td colspan="6">${data.grade_data.count_type3_total}</td>
+
+                                
                            `;
                         tableBody.appendChild(toggleRow);
 

@@ -6,8 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CMIMFI Dashboard</title>
     <link rel="stylesheet" href="../css/service.css">
-
-
     <style>
         table {
             width: 100%;
@@ -75,8 +73,6 @@
 <?php include("../navbar/header.php"); ?>
 
 <body>
-
-
     <!-- Search Form -->
     <form id="searchForm" class="d-flex justify-content-center align-items-center gap-2" action="service.php" method="get">
         <label for="startdate" class="fw-bold">Start</label>
@@ -90,6 +86,7 @@
     </form>
 
     <div class="container mt-4">
+        
         <main>
             <table style="border-width: 0.1px;" class="table1" id="data-table">
                 <thead>
@@ -504,19 +501,172 @@
                         <td id="count_15_out_ct"><span></span></td>
                         <td></td>
                     </tr>
-                    <tr id="" class="hidden-row">
+                    <tr id="" >
+                        <td><button class="toggle-btn" onclick="toggleRows5()"><i class="fas fa-pen"></i></button>ຂໍ້ມູນເງິນກູ້</td>
+                    </tr>
+                    <tr id="22" class="hidden-row">
                         <td>ຍອດເຫຼືອລູກຄ້າທັງໝົດ</td>
                         <td><span></span></td>
-                        <td id="count_16_out_ct"><span></span></td>
+                        <td id="loan_balance16"><span></span></td>
                         <td></td>
                         <td></td>
-                        <td id="count_14_out_ct"><span></span></td>
+                        <td id="loan_balance14"><span></span></td>
                         <td></td>
                         <td></td>
-                        <td id="count_17_out_ct"><span></span></td>
+                        <td id="loan_balance17"><span></span></td>
                         <td></td>
                         <td></td>
-                        <td id="count_15_out_ct"><span></span></td>
+                        <td id="loan_balance15"><span></span></td>
+                        <td></td>
+                    </tr>
+                    <tr id="23" class="hidden-row">
+                        <td>ຈຳນວນເງິນທີ່ສະເໜີກູ້ (ເດືອນ)</td>
+                        <td><span></span></td>
+                        <td id="Offer_loan16"><span></span></td>
+                        <td></td>
+                        <td></td>
+                        <td id="Offer_loan14"><span></span></td>
+                        <td></td>
+                        <td></td>
+                        <td id="Offer_loan17"><span></span></td>
+                        <td></td>
+                        <td></td>
+                        <td id="Offer_loan15"><span></span></td>
+                        <td></td>
+                    </tr>
+                    <tr id="24" class="hidden-row">
+                        <td>ຈຳນວນເງິນທີ່ເບີກຈ່າຍ (ເດືອນ) </td>
+                        <td><span></span></td>
+                        <td id="Disbursed_money16"><span></span></td>
+                        <td></td>
+                        <td></td>
+                        <td id="Disbursed_money14"><span></span></td>
+                        <td></td>
+                        <td></td>
+                        <td id="Disbursed_money17"><span></span></td>
+                        <td></td>
+                        <td></td>
+                        <td id="Disbursed_money15"><span></span></td>
+                        <td></td>
+                    </tr>
+                    <tr id="25" class="hidden-row">
+                        <td>ຈຳນວນເງິນທີ່ເບີກຈ່າຍໃຫ້ ລູກຄ້າໃໝ່/ກັບຄືນ (ເດືອນ) </td>
+                        <td><span></span></td>
+                        <td id="sum_loan_appointment_offer_return_and_new16"><span></span></td>
+                        <td></td>
+                        <td></td>
+                        <td id="sum_loan_appointment_offer_return_and_new14"><span></span></td>
+                        <td></td>
+                        <td></td>
+                        <td id="sum_loan_appointment_offer_return_and_new17"><span></span></td>
+                        <td></td>
+                        <td></td>
+                        <td id="sum_loan_appointment_offer_return15_and_new15"><span></span></td>
+                        <td></td>
+                    </tr>
+                    <tr id="26" class="hidden-row">
+                        <td>ຈຳນວນເງິນທີ່ເບີກ ຈ່າຍເພື່ອປັບໂຄງສ້າງ (ເດືອນ)</td>
+                        <td><span></span></td>
+                        <td id="sum_loan_appointment_offer_owe16"><span></span></td>
+                        <td></td>
+                        <td></td>
+                        <td id="sum_loan_appointment_offer_owe14"><span></span></td>
+                        <td></td>
+                        <td></td>
+                        <td id="sum_loan_appointment_offer_owe17"><span></span></td>
+                        <td></td>
+                        <td></td>
+                        <td id="sum_loan_appointment_offer_owe15"><span></span></td>
+                        <td></td>
+                    </tr>
+                    <tr id="27" class="hidden-row">
+                        <td>ຊຳລະຊັ້ນA & B (ເດືອນ) </td>
+                        <td><span></span></td>
+                        <td id="total_pay_amnt_16A_B"><span></span></td>
+                        <td></td>
+                        <td></td>
+                        <td id="total_pay_amnt_14A_B"><span></span></td>
+                        <td></td>
+                        <td></td>
+                        <td id="total_pay_amnt_17A_B"><span></span></td>
+                        <td></td>
+                        <td></td>
+                        <td id="total_pay_amnt_15A_B"><span></span></td>
+                        <td></td>
+                    </tr>
+                    <tr id="28" class="hidden-row">
+                        <td>ຈຳນວນເງິນຊຳລະ PAR60+ (ເດືອນ)</td>
+                        <td><span></span></td>
+                        <td id="total_pay_amnt_par6016"><span></span></td>
+                        <td></td>
+                        <td></td>
+                        <td id="total_pay_amnt_par6014"><span></span></td>
+                        <td></td>
+                        <td></td>
+                        <td id="total_pay_amnt_par6017"><span></span></td>
+                        <td></td>
+                        <td></td>
+                        <td id="total_pay_amnt_par6015"><span></span></td>
+                        <td></td>
+                    </tr>
+                    <tr id="29" class="hidden-row">
+                        <td>ຈຳນວນເງິນຊຳລະ C (ເດືອນ)</td>
+                        <td><span></span></td>
+                        <td id="total_pay_amnt_16C"><span></span></td>
+                        <td></td>
+                        <td></td>
+                        <td id="total_pay_amnt_14C"><span></span></td>
+                        <td></td>
+                        <td></td>
+                        <td id="total_pay_amnt_17C"><span></span></td>
+                        <td></td>
+                        <td></td>
+                        <td id="total_pay_amnt_15C"><span></span></td>
+                        <td></td>
+                    </tr>
+                    <tr id="30" class="hidden-row">
+                        <td>ຈຳນວນເງິນຊຳລະ D (ເດືອນ)</td>
+                        <td><span></span></td>
+                        <td id="total_pay_amnt_16D"><span></span></td>
+                        <td></td>
+                        <td></td>
+                        <td id="total_pay_amnt_14D"><span></span></td>
+                        <td></td>
+                        <td></td>
+                        <td id="total_pay_amnt_17D"><span></span></td>
+                        <td></td>
+                        <td></td>
+                        <td id="total_pay_amnt_15D"><span></span></td>
+                        <td></td>
+                    </tr>
+                    <tr id="31" class="hidden-row">
+                        <td>ຈຳນວນເງິນຊຳລະ E (ເດືອນ)</td>
+                        <td><span></span></td>
+                        <td id="total_pay_amnt_14E"><span></span></td>
+                        <td></td>
+                        <td></td>
+                        <td id="total_pay_amnt_15E"><span></span></td>
+                        <td></td>
+                        <td></td>
+                        <td id="total_pay_amnt_16E"><span></span></td>
+                        <td></td>
+                        <td></td>
+                        <td id="total_pay_amnt_17E"><span></span></td>
+                        <td></td>
+                    </tr>
+                    <tr id="32" class="hidden-row">
+                        <td>ຈຳນວນເງິນຊຳລະW/O (ເດືອນ)</td>
+                        <td><span></span></td>
+                        <td id="total_pay_amnt_16WF"><span></span></td>
+                        <td></td>
+                        <td></td>
+                        <td id="total_pay_amnt_14WF"><span></span></td>
+                        <td></td>
+                        <td></td>
+                        <td id="total_pay_amnt_17WF"><span></span></td>
+                        <td></td>
+                        <td></td>
+                        <td id="total_pay_amnt_15WF"><span></span></td>
                         <td></td>
                     </tr>
                 </tbody>
@@ -665,6 +815,62 @@
                             document.querySelector('#count_16_out_ct span').textContent = (data[0].count_16_out_ct || "0").toLocaleString();
                             document.querySelector('#count_17_out_ct span').textContent = (data[0].count_17_out_ct || "0").toLocaleString();
 
+                            document.querySelector('#loan_balance14 span').textContent = (data[0].loan_balance14 || "0").toLocaleString();
+                            document.querySelector('#loan_balance15 span').textContent = (data[0].loan_balance15 || "0").toLocaleString();
+                            document.querySelector('#loan_balance16 span').textContent = (data[0].loan_balance16 || "0").toLocaleString();
+                            document.querySelector('#loan_balance17 span').textContent = (data[0].loan_balance17 || "0").toLocaleString();
+
+                            document.querySelector('#Offer_loan16 span').textContent = (data[0].Offer_loan16 || "0").toLocaleString();
+                            document.querySelector('#Offer_loan15 span').textContent = (data[0].Offer_loan15 || "0").toLocaleString();
+                            document.querySelector('#Offer_loan14 span').textContent = (data[0].Offer_loan14 || "0").toLocaleString();
+                            document.querySelector('#Offer_loan17 span').textContent = (data[0].Offer_loan17 || "0").toLocaleString();
+
+                            document.querySelector('#Disbursed_money14 span').textContent = (data[0].Disbursed_money14 || "0").toLocaleString();
+                            document.querySelector('#Disbursed_money15 span').textContent = (data[0].Disbursed_money15 || "0").toLocaleString();
+                            document.querySelector('#Disbursed_money16 span').textContent = (data[0].Disbursed_money16 || "0").toLocaleString();
+                            document.querySelector('#Disbursed_money17 span').textContent = (data[0].Disbursed_money17 || "0").toLocaleString();
+
+                            document.querySelector('#sum_loan_appointment_offer_return_and_new14 span').textContent = (data[0].sum_loan_appointment_offer_return_and_new14 || "0").toLocaleString();
+                            document.querySelector('#sum_loan_appointment_offer_return15_and_new15 span').textContent = (data[0].sum_loan_appointment_offer_return15_and_new15 || "0").toLocaleString();
+                            document.querySelector('#sum_loan_appointment_offer_return_and_new16 span').textContent = (data[0].sum_loan_appointment_offer_return_and_new16 || "0").toLocaleString();
+                            document.querySelector('#sum_loan_appointment_offer_return_and_new17 span').textContent = (data[0].sum_loan_appointment_offer_return_and_new17 || "0").toLocaleString();
+
+                            document.querySelector('#sum_loan_appointment_offer_owe14 span').textContent = (data[0].sum_loan_appointment_offer_owe14 || "0").toLocaleString();
+                            document.querySelector('#sum_loan_appointment_offer_owe15 span').textContent = (data[0].sum_loan_appointment_offer_owe15 || "0").toLocaleString();
+                            document.querySelector('#sum_loan_appointment_offer_owe16 span').textContent = (data[0].sum_loan_appointment_offer_owe16 || "0").toLocaleString();
+                            document.querySelector('#sum_loan_appointment_offer_owe17 span').textContent = (data[0].sum_loan_appointment_offer_owe17 || "0").toLocaleString();
+
+                            document.querySelector('#total_pay_amnt_14A_B span').textContent = (data[0].total_pay_amnt_14A_B || "0").toLocaleString();
+                            document.querySelector('#total_pay_amnt_15A_B span').textContent = (data[0].total_pay_amnt_15A_B || "0").toLocaleString();
+                            document.querySelector('#total_pay_amnt_16A_B span').textContent = (data[0].total_pay_amnt_16A_B || "0").toLocaleString();
+                            document.querySelector('#total_pay_amnt_17A_B span').textContent = (data[0].total_pay_amnt_17A_B || "0").toLocaleString();
+
+                            document.querySelector('#total_pay_amnt_par6014 span').textContent = (data[0].total_pay_amnt_par6014 || "0").toLocaleString();
+                            document.querySelector('#total_pay_amnt_par6015 span').textContent = (data[0].total_pay_amnt_par6015 || "0").toLocaleString();
+                            document.querySelector('#total_pay_amnt_par6016 span').textContent = (data[0].total_pay_amnt_par6016 || "0").toLocaleString();
+                            document.querySelector('#total_pay_amnt_par6017 span').textContent = (data[0].total_pay_amnt_par6017 || "0").toLocaleString();
+
+                            document.querySelector('#total_pay_amnt_14C span').textContent = (data[0].total_pay_amnt_14C || "0").toLocaleString();
+                            document.querySelector('#total_pay_amnt_15C span').textContent = (data[0].total_pay_amnt_15C || "0").toLocaleString();
+                            document.querySelector('#total_pay_amnt_16C span').textContent = (data[0].total_pay_amnt_16C || "0").toLocaleString();
+                            document.querySelector('#total_pay_amnt_17C span').textContent = (data[0].total_pay_amnt_17C || "0").toLocaleString();
+
+                            document.querySelector('#total_pay_amnt_14D span').textContent = (data[0].total_pay_amnt_14D || "0").toLocaleString();
+                            document.querySelector('#total_pay_amnt_15D span').textContent = (data[0].total_pay_amnt_15D || "0").toLocaleString();
+                            document.querySelector('#total_pay_amnt_16D span').textContent = (data[0].total_pay_amnt_16D || "0").toLocaleString();
+                            document.querySelector('#total_pay_amnt_17D span').textContent = (data[0].total_pay_amnt_17D || "0").toLocaleString();
+
+                            document.querySelector('#total_pay_amnt_14E span').textContent = (data[0].total_pay_amnt_14E || "0").toLocaleString();
+                            document.querySelector('#total_pay_amnt_15E span').textContent = (data[0].total_pay_amnt_15E || "0").toLocaleString();
+                            document.querySelector('#total_pay_amnt_16E span').textContent = (data[0].total_pay_amnt_16E || "0").toLocaleString();
+                            document.querySelector('#total_pay_amnt_17E span').textContent = (data[0].total_pay_amnt_17E || "0").toLocaleString();
+
+                            document.querySelector('#total_pay_amnt_14WF span').textContent = (data[0].total_pay_amnt_14WF || "0").toLocaleString();
+                            document.querySelector('#total_pay_amnt_15WF span').textContent = (data[0].total_pay_amnt_15WF || "0").toLocaleString();
+                            document.querySelector('#total_pay_amnt_16WF span').textContent = (data[0].total_pay_amnt_16WF || "0").toLocaleString();
+                            document.querySelector('#total_pay_amnt_17WF span').textContent = (data[0].total_pay_amnt_17WF || "0").toLocaleString();
+
+
                           
 
                         } else {
@@ -712,6 +918,17 @@
             }
             function toggleRows4() {
                 var rows = ['16', '17', '18','19','20','21']; // Add more row IDs here if needed
+                rows.forEach(function(rowId) {
+                    var row = document.getElementById(rowId);
+                    if (row.style.display === "none" || row.style.display === "") {
+                        row.style.display = "table-row";
+                    } else {
+                        row.style.display = "none";
+                    }
+                });
+            }
+            function toggleRows5() {
+                var rows = ['22', '23', '24', '25', '26','27','28','29','30','31']; // Add more row IDs here if needed
                 rows.forEach(function(rowId) {
                     var row = document.getElementById(rowId);
                     if (row.style.display === "none" || row.style.display === "") {
